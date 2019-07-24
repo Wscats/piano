@@ -1,13 +1,11 @@
 import { WeElement, define, h } from "omi";
 import notes from "./notes.js";
 
-class AppOmil extends WeElement {
+class AppPiano extends WeElement {
   render(props) {
     return h(
       "div",
-      {
-        class: "app-omil"
-      },
+      null,
       h(
         "div",
         {
@@ -22,6 +20,7 @@ class AppOmil extends WeElement {
             h(
               "div",
               {
+                "data-type": "white",
                 ref: e => {
                   this[item.white.name] = e;
                 },
@@ -30,6 +29,13 @@ class AppOmil extends WeElement {
                 "data-key": item.white.keyCode,
                 "data-note": item.white.name
               },
+              h(
+                "span",
+                {
+                  class: "piano-note"
+                },
+                item.white.name
+              ),
               h("audio", {
                 src: this.data.notes[item.white.name],
                 hidden: "true",
@@ -40,6 +46,7 @@ class AppOmil extends WeElement {
             h(
               "div",
               {
+                "data-type": "black",
                 ref: e => {
                   this[item.black.name] = e;
                 },
@@ -51,6 +58,14 @@ class AppOmil extends WeElement {
                 "data-key": item.black.keyCode,
                 "data-note": item.black.name
               },
+              h(
+                "span",
+                {
+                  class: "piano-note",
+                  style: "color:#fff"
+                },
+                item.black.name
+              ),
               h("audio", {
                 src: this.data.notes[item.white.name],
                 hidden: "true",
@@ -60,6 +75,13 @@ class AppOmil extends WeElement {
             )
           );
         })
+      ),
+      h(
+        "button",
+        {
+          onClick: this.playSong.bind(this)
+        },
+        "\u64AD\u653E"
       )
     );
   }
@@ -152,17 +174,11 @@ class AppOmil extends WeElement {
 
       let playNote = key => {
         if (e.shiftKey === true) {
-          this.playNote(`${key}5`, {
-            target: this[`${key}5`]
-          });
+          this.playNote(`${key}5`);
         } else if (e.ctrlKey === true) {
-          this.playNote(`${key}3`, {
-            target: this[`${key}3`]
-          });
+          this.playNote(`${key}3`);
         } else {
-          this.playNote(`${key}4`, {
-            target: this[`${key}4`]
-          });
+          this.playNote(`${key}4`);
         }
       };
 
@@ -200,24 +216,124 @@ class AppOmil extends WeElement {
     };
   }
 
-  playNote(name, e) {
-    console.log(this[name], e);
-    let audio = e.target.childNodes[0];
-
-    if (e) {
-      e.target.style.background = `linear-gradient(-30deg, #616161, #fff)`;
-      let timer = setTimeout(() => {
-        e.target.style.background = `linear-gradient(-30deg, #f8f8f8, #fff)`;
-        clearInterval(timer);
-      }, 1000);
-    }
-
+  playNote(name) {
+    let audio = this[name].childNodes[1];
+    this[name].style.background = `linear-gradient(-30deg, #616161, #fff)`;
+    let timer = setTimeout(() => {
+      this[name].getAttribute("data-type") === "white"
+        ? (this[
+            name
+          ].style.background = `linear-gradient(-30deg, #f8f8f8, #fff)`)
+        : (this[
+            name
+          ].style.background = `linear-gradient(-20deg, #222, #000, #222)`);
+      clearInterval(timer);
+    }, 1000);
     audio.currentTime = 0;
     audio.play();
   }
+
+  playSong() {
+    let song = [
+      {
+        note: "G3",
+        time: 500
+      },
+      {
+        note: "C4",
+        time: 1000
+      },
+      {
+        note: "E4",
+        time: 500
+      },
+      {
+        note: "G4",
+        time: 1000
+      },
+      {
+        note: "C4",
+        time: 500
+      },
+      {
+        note: "B3",
+        time: 1000
+      },
+      {
+        note: "E4",
+        time: 500
+      },
+      {
+        note: "G4",
+        time: 1500
+      },
+      {
+        note: "G4",
+        time: 500
+      },
+      {
+        note: "A4",
+        time: 1000
+      },
+      {
+        note: "B4",
+        time: 500
+      },
+      {
+        note: "C5",
+        time: 1000
+      },
+      {
+        note: "A4",
+        time: 500
+      },
+      {
+        note: "G4",
+        time: 1500
+      },
+      {
+        note: "E4",
+        time: 500
+      },
+      {
+        note: "D4",
+        time: 500
+      },
+      {
+        note: "C4",
+        time: 1000
+      },
+      {
+        note: "C4",
+        time: 500
+      },
+      {
+        note: "C4",
+        time: 500
+      }
+    ];
+    let offset = 0;
+
+    let playSong = async () => {
+      if (offset < song.length) {
+        this.playNote(song[offset]["note"]);
+        await new Promise(resolve => {
+          setTimeout(() => {
+            resolve();
+          }, song[offset]["time"]);
+        });
+        offset++;
+        playSong();
+      } else {
+        return;
+      }
+    };
+
+    playSong();
+  }
 }
 
-AppOmil.css = `
+AppPiano.css = `
   .piano {
     background: linear-gradient(-65deg, #000, #222, #000, #666, #222 75%);
     border-top: .8rem solid #282828;
@@ -248,6 +364,8 @@ AppOmil.css = `
   }
 
   .piano-key__white {
+    display: flex;
+    flex-direction: column-reverse;
     background: linear-gradient(-30deg, #f8f8f8, #fff);
     -webkit-box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px 0 0 #fff, 0 4px 3px rgba(0, 0, 0, .7), inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px -1px 15px rgba(0, 0, 0, .5), -3px 4px 6px rgba(0, 0, 0, .5);
     box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px 0 0 #fff, 0 4px 3px rgba(0, 0, 0, .7), inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px -1px 15px rgba(0, 0, 0, .5), -3px 4px 6px rgba(0, 0, 0, .5);
@@ -256,6 +374,8 @@ AppOmil.css = `
   }
 
   .piano-key__black {
+    display: flex;
+    flex-direction: column-reverse;
     background: linear-gradient(-20deg, #222, #000, #222);
     -webkit-box-shadow: inset 0 -1px 2px hsla(0, 0%, 100%, .4), 0 2px 3px rgba(0, 0, 0, .4);
     box-shadow: inset 0 -1px 2px hsla(0, 0%, 100%, .4), 0 2px 3px rgba(0, 0, 0, .4);
@@ -271,5 +391,12 @@ AppOmil.css = `
     width: 70%;
     z-index: 1;
   }
+
+  .piano-note {
+    color: #000;
+    font-size: 12px;
+    text-align: center;
+    height: 20px;
+  }
 `;
-define("app-omil", AppOmil);
+define("app-piano", AppPiano);

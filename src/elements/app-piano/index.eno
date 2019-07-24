@@ -1,20 +1,22 @@
-<template name="app-omil">
-  <div class="app-omil">
+<template name="app-piano">
+  <div>
     <div class="piano">
       {
       this.data.pianoKeys.map((item)=>{
       return (
       <div class="piano-key">
-        <div ref={e=>{ this[item.white.name] = e }} class="piano-key__white"
+        <div data-type="white" ref={e=>{ this[item.white.name] = e }} class="piano-key__white"
           onClick={this.playNote.bind(this,item.white.name)} data-key={item.white.keyCode}
           data-note={item.white.name}>
+          <span class="piano-note">{item.white.name}</span>
           <audio src={this.data.notes[item.white.name]} hidden='true' data-note={item.white.name}
             class='audioEle'></audio>
         </div>
-        <div ref={e=>{ this[item.black.name] = e }} style={{
+        <div data-type="black" ref={e=>{ this[item.black.name] = e }} style={{
           display: item.black.name ? 'block' : 'none'
         }} class="piano-key__black" onClick={this.playNote.bind(this,item.black.name)} data-key={item.black.keyCode}
           data-note={item.black.name}>
+          <span class="piano-note" style="color:#fff">{item.black.name}</span>
           <audio src={this.data.notes[item.white.name]} hidden='true' data-note={item.white.name}
             class='audioEle'></audio>
         </div>
@@ -23,6 +25,7 @@
       })
       }
     </div>
+    <button onClick={this.playSong.bind(this)}>播放</button>
   </div>
 </template>
 <script>
@@ -108,11 +111,11 @@
         var e = event || window.event || arguments.callee.caller.arguments[0];
         let playNote = (key) => {
           if (e.shiftKey === true) {
-            this.playNote(`${key}5`, { target: this[`${key}5`] })
+            this.playNote(`${key}5`)
           } else if (e.ctrlKey === true) {
-            this.playNote(`${key}3`, { target: this[`${key}3`] })
+            this.playNote(`${key}3`)
           } else {
-            this.playNote(`${key}4`, { target: this[`${key}4`] })
+            this.playNote(`${key}4`)
           }
         }
         if (e && 49 <= e.keyCode && e.keyCode <= 55) {
@@ -143,24 +146,118 @@
         }
       };
     }
-    playNote(name, e) {
+    playNote(name) {
       // console.log(name)
       // console.log({ ...this })
-      console.log(this[name], e)
+      // console.log(this[name])
       // console.log(name, e.target.childNodes[0])
       // console.log(name, this[name], e.target)
       // this[`audio-${index}`].pause()
 
-      let audio = e.target.childNodes[0]
-      if (e) {
-        e.target.style.background = `linear-gradient(-30deg, #616161, #fff)`
-        let timer = setTimeout(() => {
-          e.target.style.background = `linear-gradient(-30deg, #f8f8f8, #fff)`
-          clearInterval(timer)
-        }, 1000)
-      }
-      audio.currentTime = 0;//audio.play();// 这个就是播放  
+      let audio = this[name].childNodes[1]
+      this[name].style.background = `linear-gradient(-30deg, #616161, #fff)`
+      let timer = setTimeout(() => {
+        // console.log(this[name].getAttribute('data-type'))
+        this[name].getAttribute('data-type') === 'white' ? this[name].style.background = `linear-gradient(-30deg, #f8f8f8, #fff)` : this[name].style.background = `linear-gradient(-20deg, #222, #000, #222)`
+        clearInterval(timer)
+      }, 1000)
+      audio.currentTime = 0;
       audio.play();
+    }
+    playSong() {
+      // 月亮代表我的心
+      let song = [{
+        // -5
+        note: 'G3',
+        time: 500
+      }, {
+        // 1.
+        note: 'C4',
+        time: 1000
+      }, {
+        // 3
+        note: 'E4',
+        time: 500
+      }, {
+        // 5.
+        note: 'G4',
+        time: 1000
+      }, {
+        // 1
+        note: 'C4',
+        time: 500
+      }, {
+        // -7
+        note: 'B3',
+        time: 1000
+      }, {
+        // 3
+        note: 'E4',
+        time: 500
+      }, {
+        // 5
+        // 0
+        note: 'G4',
+        time: 1500
+      }, {
+        // 5
+        note: 'G4',
+        time: 500
+      }, {
+        // 6.
+        note: 'A4',
+        time: 1000
+      }, {
+        // 7
+        note: 'B4',
+        time: 500
+      }, {
+        // +1.
+        note: 'C5',
+        time: 1000
+      }, {
+        // 6
+        note: 'A4',
+        time: 500
+      }, {
+        // 5
+        note: 'G4',
+        time: 1500
+      }, {
+        // 3
+        note: 'E4',
+        time: 500
+      }, {
+        // 2
+        note: 'D4',
+        time: 500
+      }, {
+        // 1.
+        note: 'C4',
+        time: 1000
+      }, {
+        // 1
+        note: 'C4',
+        time: 500
+      }, {
+        // 1
+        note: 'C4',
+        time: 500
+      }]
+      let offset = 0
+      let playSong = async () => {
+        if (offset < song.length) {
+          this.playNote(song[offset]['note'])
+          await new Promise((resolve) => {
+            setTimeout(() => { resolve() }, song[offset]['time'])
+          })
+          offset++
+          playSong()
+        } else {
+          return;
+        }
+      }
+      playSong()
     }
   }
 </script>
@@ -195,6 +292,8 @@
   }
 
   .piano-key__white {
+    display: flex;
+    flex-direction: column-reverse;
     background: linear-gradient(-30deg, #f8f8f8, #fff);
     -webkit-box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px 0 0 #fff, 0 4px 3px rgba(0, 0, 0, .7), inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px -1px 15px rgba(0, 0, 0, .5), -3px 4px 6px rgba(0, 0, 0, .5);
     box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px 0 0 #fff, 0 4px 3px rgba(0, 0, 0, .7), inset 0 -1px 0 #fff, inset 1px 0 0 #fff, inset -1px -1px 15px rgba(0, 0, 0, .5), -3px 4px 6px rgba(0, 0, 0, .5);
@@ -203,6 +302,8 @@
   }
 
   .piano-key__black {
+    display: flex;
+    flex-direction: column-reverse;
     background: linear-gradient(-20deg, #222, #000, #222);
     -webkit-box-shadow: inset 0 -1px 2px hsla(0, 0%, 100%, .4), 0 2px 3px rgba(0, 0, 0, .4);
     box-shadow: inset 0 -1px 2px hsla(0, 0%, 100%, .4), 0 2px 3px rgba(0, 0, 0, .4);
@@ -217,5 +318,12 @@
     top: 0;
     width: 70%;
     z-index: 1;
+  }
+
+  .piano-note {
+    color: #000;
+    font-size: 12px;
+    text-align: center;
+    height: 20px;
   }
 </style>

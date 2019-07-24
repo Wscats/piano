@@ -1,11 +1,11 @@
 import { define, WeElement } from 'omi'
-import '../app-omil'
+import '../app-piano'
 
 define('my-app', class extends WeElement {
   render() {
     return (
       <div class="app">
-        <app-omil />
+        <app-piano />
       </div>
     )
   }
