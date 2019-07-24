@@ -81,7 +81,7 @@ class AppPiano extends WeElement {
         {
           onClick: this.playSong.bind(this)
         },
-        "\u64AD\u653E"
+        "\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3 \u64AD\u653E"
       )
     );
   }
@@ -310,6 +310,58 @@ class AppPiano extends WeElement {
       {
         note: "C4",
         time: 500
+      },
+      {
+        note: "E4",
+        time: 500
+      },
+      {
+        note: "D4",
+        time: 500
+      },
+      {
+        note: "C4",
+        time: 1000
+      },
+      {
+        note: "C4",
+        time: 500
+      },
+      {
+        note: "C4",
+        time: 500
+      },
+      {
+        note: "D4",
+        time: 500
+      },
+      {
+        note: "E4",
+        time: 500
+      },
+      {
+        note: "D4",
+        time: 500
+      },
+      {
+        note: "C4",
+        time: 1000
+      },
+      {
+        note: "A3",
+        time: 500
+      },
+      {
+        note: "D4",
+        time: 500
+      },
+      {
+        note: "E4",
+        time: 500
+      },
+      {
+        note: "D4",
+        time: 500
       }
     ];
     let offset = 0;
@@ -394,7 +446,7 @@ AppPiano.css = `
 
   .piano-note {
     color: #000;
-    font-size: 12px;
+    font-size: 8px;
     text-align: center;
     height: 20px;
   }

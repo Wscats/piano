@@ -1,9 +1,7 @@
 <template name="app-piano">
   <div>
     <div class="piano">
-      {
-      this.data.pianoKeys.map((item)=>{
-      return (
+      {this.data.pianoKeys.map((item)=>{return(
       <div class="piano-key">
         <div data-type="white" ref={e=>{ this[item.white.name] = e }} class="piano-key__white"
           onClick={this.playNote.bind(this,item.white.name)} data-key={item.white.keyCode}
@@ -21,11 +19,9 @@
             class='audioEle'></audio>
         </div>
       </div>
-      )
-      })
-      }
+      )})}
     </div>
-    <button onClick={this.playSong.bind(this)}>播放</button>
+    <button onClick={this.playSong.bind(this)}>月亮代表我的心 播放</button>
   </div>
 </template>
 <script>
@@ -197,6 +193,7 @@
       }, {
         // 5
         // 0
+        // 我
         note: 'G4',
         time: 1500
       }, {
@@ -242,6 +239,60 @@
       }, {
         // 1
         note: 'C4',
+        time: 500
+      }, {
+        // 3
+        // 我的
+        note: 'E4',
+        time: 500
+      }, {
+        // 2
+        note: 'D4',
+        time: 500
+      }, {
+        // 1
+        note: 'C4',
+        time: 1000
+      }, {
+        // 1
+        note: 'C4',
+        time: 500
+      }, {
+        // 1
+        note: 'C4',
+        time: 500
+      }, {
+        // 2
+        // 月亮
+        note: 'D4',
+        time: 500
+      }, {
+        // 3
+        note: 'E4',
+        time: 500
+      }, {
+        // 2
+        note: 'D4',
+        time: 500
+      }, {
+        // 1
+        note: 'C4',
+        time: 1000
+      }, {
+        // -6
+        note: 'A3',
+        time: 500
+      }, {
+        // 2
+        note: 'D4',
+        time: 500
+      }, {
+        // 3
+        note: 'E4',
+        time: 500
+      }, {
+        // 2
+        note: 'D4',
         time: 500
       }]
       let offset = 0
@@ -322,7 +373,7 @@
 
   .piano-note {
     color: #000;
-    font-size: 12px;
+    font-size: 8px;
     text-align: center;
     height: 20px;
   }
