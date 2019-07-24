@@ -1,5 +1,7 @@
 import { WeElement, define, h } from "omi";
 import notes from "./notes.js";
+import song from "./songs/moon.js";
+import "omiu/button";
 
 class AppPiano extends WeElement {
   render(props) {
@@ -77,11 +79,12 @@ class AppPiano extends WeElement {
         })
       ),
       h(
-        "button",
+        "o-button",
         {
-          onClick: this.playSong.bind(this)
+          onClick: this.playSong.bind(this),
+          style: "margin-top:20px; width:250px;"
         },
-        "\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3 \u64AD\u653E"
+        "\u6F14\u793A\uFF1A\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3"
       )
     );
   }
@@ -271,140 +274,11 @@ class AppPiano extends WeElement {
   }
 
   playSong() {
-    let song = [
-      {
-        note: "G3",
-        time: 500
-      },
-      {
-        note: "C4",
-        time: 1000
-      },
-      {
-        note: "E4",
-        time: 500
-      },
-      {
-        note: "G4",
-        time: 1000
-      },
-      {
-        note: "C4",
-        time: 500
-      },
-      {
-        note: "B3",
-        time: 1000
-      },
-      {
-        note: "E4",
-        time: 500
-      },
-      {
-        note: "G4",
-        time: 1500
-      },
-      {
-        note: "G4",
-        time: 500
-      },
-      {
-        note: "A4",
-        time: 1000
-      },
-      {
-        note: "B4",
-        time: 500
-      },
-      {
-        note: "C5",
-        time: 1000
-      },
-      {
-        note: "A4",
-        time: 500
-      },
-      {
-        note: "G4",
-        time: 1500
-      },
-      {
-        note: "E4",
-        time: 500
-      },
-      {
-        note: "D4",
-        time: 500
-      },
-      {
-        note: "C4",
-        time: 1000
-      },
-      {
-        note: "C4",
-        time: 500
-      },
-      {
-        note: "C4",
-        time: 500
-      },
-      {
-        note: "E4",
-        time: 500
-      },
-      {
-        note: "D4",
-        time: 500
-      },
-      {
-        note: "C4",
-        time: 1000
-      },
-      {
-        note: "C4",
-        time: 500
-      },
-      {
-        note: "C4",
-        time: 500
-      },
-      {
-        note: "D4",
-        time: 500
-      },
-      {
-        note: "E4",
-        time: 500
-      },
-      {
-        note: "D4",
-        time: 500
-      },
-      {
-        note: "C4",
-        time: 1000
-      },
-      {
-        note: "A3",
-        time: 500
-      },
-      {
-        note: "D4",
-        time: 500
-      },
-      {
-        note: "E4",
-        time: 500
-      },
-      {
-        note: "D4",
-        time: 500
-      }
-    ];
     let offset = 0;
 
     let playSong = async () => {
       if (offset < song.length) {
+        console.log(song[offset]["note"]);
         this.playNote(song[offset]["note"]);
         await new Promise(resolve => {
           setTimeout(() => {
@@ -423,6 +297,11 @@ class AppPiano extends WeElement {
 }
 
 AppPiano.css = `
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
   .piano {
     background: linear-gradient(-65deg, #000, #222, #000, #666, #222 75%);
     border-top: .8rem solid #282828;

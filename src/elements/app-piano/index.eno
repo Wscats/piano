@@ -21,11 +21,13 @@
       </div>
       )})}
     </div>
-    <button onClick={this.playSong.bind(this)}>月亮代表我的心 播放</button>
+    <o-button onClick={this.playSong.bind(this)} style='margin-top:20px; width:250px;'>演示：月亮代表我的心</o-button>
   </div>
 </template>
 <script>
   import notes from './notes.js'
+  import song from './songs/moon.js'
+  import 'omiu/button'
   export default class {
     install() {
       this.data = {
@@ -121,7 +123,6 @@
           }
         }
         if (e && 49 <= e.keyCode && e.keyCode <= 55) {
-          //要做的事情
           switch (e.keyCode) {
             case 49:
               playNote('C')
@@ -147,7 +148,6 @@
           }
         }
         if (e && (81 === e.keyCode || e.keyCode === 87 || e.keyCode === 69 || e.keyCode === 82 || e.keyCode === 84)) {
-          //要做的事情
           switch (e.keyCode) {
             case 81:
               playNote('C#')
@@ -187,143 +187,10 @@
       audio.play();
     }
     playSong() {
-      // 月亮代表我的心
-      let song = [{
-        // -5
-        note: 'G3',
-        time: 500
-      }, {
-        // 1.
-        note: 'C4',
-        time: 1000
-      }, {
-        // 3
-        note: 'E4',
-        time: 500
-      }, {
-        // 5.
-        note: 'G4',
-        time: 1000
-      }, {
-        // 1
-        note: 'C4',
-        time: 500
-      }, {
-        // -7
-        note: 'B3',
-        time: 1000
-      }, {
-        // 3
-        note: 'E4',
-        time: 500
-      }, {
-        // 5
-        // 0
-        // 我
-        note: 'G4',
-        time: 1500
-      }, {
-        // 5
-        note: 'G4',
-        time: 500
-      }, {
-        // 6.
-        note: 'A4',
-        time: 1000
-      }, {
-        // 7
-        note: 'B4',
-        time: 500
-      }, {
-        // +1.
-        note: 'C5',
-        time: 1000
-      }, {
-        // 6
-        note: 'A4',
-        time: 500
-      }, {
-        // 5
-        note: 'G4',
-        time: 1500
-      }, {
-        // 3
-        note: 'E4',
-        time: 500
-      }, {
-        // 2
-        note: 'D4',
-        time: 500
-      }, {
-        // 1.
-        note: 'C4',
-        time: 1000
-      }, {
-        // 1
-        note: 'C4',
-        time: 500
-      }, {
-        // 1
-        note: 'C4',
-        time: 500
-      }, {
-        // 3
-        // 我的
-        note: 'E4',
-        time: 500
-      }, {
-        // 2
-        note: 'D4',
-        time: 500
-      }, {
-        // 1
-        note: 'C4',
-        time: 1000
-      }, {
-        // 1
-        note: 'C4',
-        time: 500
-      }, {
-        // 1
-        note: 'C4',
-        time: 500
-      }, {
-        // 2
-        // 月亮
-        note: 'D4',
-        time: 500
-      }, {
-        // 3
-        note: 'E4',
-        time: 500
-      }, {
-        // 2
-        note: 'D4',
-        time: 500
-      }, {
-        // 1
-        note: 'C4',
-        time: 1000
-      }, {
-        // -6
-        note: 'A3',
-        time: 500
-      }, {
-        // 2
-        note: 'D4',
-        time: 500
-      }, {
-        // 3
-        note: 'E4',
-        time: 500
-      }, {
-        // 2
-        note: 'D4',
-        time: 500
-      }]
       let offset = 0
       let playSong = async () => {
         if (offset < song.length) {
+          console.log(song[offset]['note'])
           this.playNote(song[offset]['note'])
           await new Promise((resolve) => {
             setTimeout(() => { resolve() }, song[offset]['time'])
@@ -339,6 +206,11 @@
   }
 </script>
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
   .piano {
     background: linear-gradient(-65deg, #000, #222, #000, #666, #222 75%);
     border-top: .8rem solid #282828;
