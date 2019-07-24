@@ -101,7 +101,7 @@ class AppPiano extends WeElement {
           },
           black: {
             name: `C#${item}`,
-            keyCode: null
+            keyCode: 81
           }
         },
         {
@@ -111,7 +111,7 @@ class AppPiano extends WeElement {
           },
           black: {
             name: `D#${item}`,
-            keyCode: null
+            keyCode: 87
           }
         },
         {
@@ -131,7 +131,7 @@ class AppPiano extends WeElement {
           },
           black: {
             name: `F#${item}`,
-            keyCode: null
+            keyCode: 69
           }
         },
         {
@@ -141,7 +141,7 @@ class AppPiano extends WeElement {
           },
           black: {
             name: `G#${item}`,
-            keyCode: null
+            keyCode: 82
           }
         },
         {
@@ -151,7 +151,7 @@ class AppPiano extends WeElement {
           },
           black: {
             name: `A#${item}`,
-            keyCode: null
+            keyCode: 84
           }
         },
         {
@@ -170,13 +170,19 @@ class AppPiano extends WeElement {
     this.data.notes = notes;
 
     document.onkeydown = event => {
+      console.log(event);
       var e = event || window.event || arguments.callee.caller.arguments[0];
 
       let playNote = key => {
         if (e.shiftKey === true) {
+          this.playNote(`${key}2`);
+        } else if (e.altKey === true) {
           this.playNote(`${key}5`);
         } else if (e.ctrlKey === true) {
           this.playNote(`${key}3`);
+        } else if (e.metaKey === true) {
+          this.playNote(`${key}6`);
+          e.returnValue = false;
         } else {
           this.playNote(`${key}4`);
         }
@@ -210,6 +216,37 @@ class AppPiano extends WeElement {
 
           case 55:
             playNote("B");
+            break;
+        }
+      }
+
+      if (
+        e &&
+        (81 === e.keyCode ||
+          e.keyCode === 87 ||
+          e.keyCode === 69 ||
+          e.keyCode === 82 ||
+          e.keyCode === 84)
+      ) {
+        switch (e.keyCode) {
+          case 81:
+            playNote("C#");
+            break;
+
+          case 87:
+            playNote("D#");
+            break;
+
+          case 69:
+            playNote("F#");
+            break;
+
+          case 82:
+            playNote("G#");
+            break;
+
+          case 84:
+            playNote("A#");
             break;
         }
       }
