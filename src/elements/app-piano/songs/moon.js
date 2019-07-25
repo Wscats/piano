@@ -1,4 +1,4 @@
-export default [
+const song = [
     {// 月亮代表我的心
         // -5
         note: 'G3',
@@ -514,3 +514,4 @@ export default [
         time: 1000
     }
 ]
+export default [...song, ...song]

@@ -32,7 +32,7 @@
 
 # Demo Address
 
-[演示地址](https://wscats.github.io/piano/build/)，代码打久了，放开双手远离屏幕，让`Omi`为你演奏几首钢琴曲吧~
+[演示地址](https://wscats.github.io/piano/build/)，代码打久了，放开双手远离屏幕，让`Omi`为你演奏几首钢琴曲，如果您喜欢的话，请点个赞吧~
 
 # Develop
 
