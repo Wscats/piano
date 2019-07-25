@@ -1,69 +1,63 @@
-## Develop
+<div align="center">
+<p><img width="150" src="./public/logo.png"></p>
+
+<h1>Omi Piano</h1>
+
+<p>
+  <strong>Build piano with Omi and Omi Snippets</strong>
+  <br /><br />
+  <strong>基于Omi和Omi Snippets构建钢琴应用</strong>
+  <!-- 
+  ,
+  <a href="https://github.com/Wscats/omi-electron/releases/tag/1.3">Download Win Version Zip</a>
+  or
+  <a href="https://github.com/Wscats/omi-electron/releases/tag/1.2">Download Mac Version Zip</a> 
+  -->
+</p>
+
+<p>
+  <sub>Made with ❤︎ by
+    <a href="https://github.com/Wscats">Eno Yao</a>
+  </sub>
+</p>
+
+<p>
+<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/Angular-news/news/image/npm.svg" alt="NPM version"></a>
+<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/Angular-news/news/image/mit.svg" alt="MIT License"></a>
+<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/Angular-news/news/image/linux.svg" alt="Linux Build"></a>
+<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/Angular-news/news/image/windows.svg" alt="Window Build"/></a>
+</p>
+
+</div>
+
+# Demo Address
+
+[演示地址](https://wscats.github.io/piano/build/)，代码打久了，放开双手远离屏幕，让`Omi`为你演奏几首钢琴曲吧~
+
+# Develop
+
+<img src="./public/demo.png">
 
 ```bash
+# 获取远程仓库代码
+git clone https://github.com/Wscats/piano
+# 进入目录
+cd piano
+# 安装依赖
 npm install
+# 启动项目
 npm start
+# 在浏览器访问 http://localhost:3000
 ```
 
-## Release
+# Release
 
+发布属于自己的演奏版本
 ```bash
 npm run build
 ```
 
-## Eslint + Prettier
-
-``` bash
-npm run fix
-```
-
-## Directory description
-
-```
-├─ config
-├─ public
-├─ scripts
-├─ src
-│  ├─ assets
-│  ├─ elements    //Store all custom elements
-│  ├─ store       //Store all this store of pages
-│  ├─ admin.js    //Entry js of compiler，will build to admin.html
-│  └─ index.js    //Entry js of compiler，will build to index.html
-```
-
-## Build Scripts
-
-```json
-"scripts": {
-    "start": "node scripts/start.js",
-    "build": "PUBLIC_URL=. node scripts/build.js",
-    "build-windows": "set PUBLIC_URL=.&& node scripts/build.js",
-    "fix": "eslint src --fix"
-}
-```
-
-You can set up the PUBLIC_URL, such as:
-
-```bash
-...
-"build": "PUBLIC_URL=https://fe.wxpay.oa.com/dv node scripts/build.js",
-"build-windows": "set PUBLIC_URL=https://fe.wxpay.oa.com/dv&& node scripts/build.js",
-...
-```
-
-## Switch omi and omio
-
-Add or remove the alias config in package.json to switch omi and omio：
-
-```js
- ...
- "alias": {
-    "omi": "omio"
-  }
-  ...
-```
-
-## License
+# License
 
 MIT 
 

@@ -1,6 +1,7 @@
 import { WeElement, define, h } from "omi";
 import notes from "./notes.js";
-import song from "./songs/moon.js";
+import moon from "./songs/moon.js";
+import fuji from "./songs/fuji.js";
 import "omiu/button";
 
 class AppPiano extends WeElement {
@@ -81,10 +82,18 @@ class AppPiano extends WeElement {
       h(
         "o-button",
         {
-          onClick: this.playSong.bind(this),
-          style: "margin-top:20px; width:250px;"
+          onClick: this.playSong.bind(this, moon),
+          style: "margin-top:20px; width:280px;"
         },
-        "\u6F14\u793A\uFF1A\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3"
+        "\u70B9\u51FB\u5F39\u594F\uFF1A\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3"
+      ),
+      h(
+        "o-button",
+        {
+          onClick: this.playSong2.bind(this, fuji),
+          style: "margin-top:20px; width:280px;"
+        },
+        "\u70B9\u51FB\u5F39\u594F\uFF1A\u5BCC\u58EB\u5C71\u4E0B&\u7231\u60C5\u8F6C\u79FB"
       )
     );
   }
@@ -273,7 +282,7 @@ class AppPiano extends WeElement {
     audio.play();
   }
 
-  playSong() {
+  playSong(song) {
     let offset = 0;
 
     let playSong = async () => {
@@ -284,6 +293,108 @@ class AppPiano extends WeElement {
           setTimeout(() => {
             resolve();
           }, song[offset]["time"]);
+        });
+        offset++;
+        playSong();
+      } else {
+        return;
+      }
+    };
+
+    playSong();
+  }
+
+  playSong2(song) {
+    let offset = 0;
+
+    let playSong = async () => {
+      if (offset < song.length) {
+        let letter = song[offset].match(/[0-9]/g)[0];
+        let subKey = song[offset].split("-").length - 1;
+        let addKey = song[offset].split("+").length - 1;
+        let pointKey = song[offset].split(".").length - 1;
+        let note;
+        let key;
+        let time;
+
+        switch (letter) {
+          case "1":
+            note = "C";
+            break;
+
+          case "2":
+            note = "D";
+            break;
+
+          case "3":
+            note = "E";
+            break;
+
+          case "4":
+            note = "F";
+            break;
+
+          case "5":
+            note = "G";
+            break;
+
+          case "6":
+            note = "A";
+            break;
+
+          case "7":
+            note = "B";
+            break;
+        }
+
+        switch (subKey) {
+          case 0:
+            key = 4;
+            break;
+
+          case 1:
+            key = 3;
+            break;
+
+          case 2:
+            key = 2;
+            break;
+        }
+
+        switch (addKey) {
+          case 0:
+            key = 4;
+            break;
+
+          case 1:
+            key = 5;
+            break;
+
+          case 2:
+            key = 6;
+            break;
+        }
+
+        switch (pointKey) {
+          case 0:
+            time = 500;
+            break;
+
+          case 1:
+            time = 1000;
+            break;
+
+          case 2:
+            time = 1500;
+            break;
+        }
+
+        console.log(note + key);
+        this.playNote(`${note + key}`);
+        await new Promise(resolve => {
+          setTimeout(() => {
+            resolve();
+          }, time);
         });
         offset++;
         playSong();
