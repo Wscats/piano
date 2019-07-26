@@ -22,7 +22,7 @@
       )})}
     </div>
     <o-button onClick={this.playSong.bind(this,moon)} style='margin-top:20px; width:280px;'>点击弹奏：月亮代表我的心</o-button>
-    <o-button onClick={this.playSong2.bind(this,fuji)} style='margin-top:20px; width:280px;'>点击弹奏：富士山下&爱情转移</o-button>
+    <o-button onClick={this.playSong.bind(this,fuji)} style='margin-top:20px; width:280px;'>点击弹奏：富士山下&爱情转移</o-button>
   </div>
 </template>
 <script>
@@ -183,15 +183,29 @@
       audio.currentTime = 0;
       audio.play();
     }
-    // 简谱1演奏方法 根据 CDEFGAB
+
     playSong(song) {
       let offset = 0
+      let time = 0
       let playSong = async () => {
         if (offset < song.length) {
-          console.log(song[offset]['note'])
-          this.playNote(song[offset]['note'])
+          switch (typeof song[offset]) {
+            // 简谱2演奏方法 根据 ++12345--6. 简单旋律情况
+            case 'string':
+              time = this.handleObject(song, offset)
+              break;
+            // 简谱1演奏方法 根据 CDEFGAB，复杂旋律情况，比如有和弦
+            case 'object':
+              console.log(song[offset]['note'])
+              time = song[offset]['time'];
+              this.playNote(song[offset]['note'])
+              break;
+          }
           await new Promise((resolve) => {
-            setTimeout(() => { resolve() }, song[offset]['time'])
+            let timer = setTimeout(() => {
+              clearInterval(timer)
+              resolve()
+            }, time)
           })
           offset++
           playSong()
@@ -201,91 +215,81 @@
       }
       playSong()
     }
-    // 简谱2演奏方法 根据 ++12345--6.
-    playSong2(song) {
-      let offset = 0
-      let playSong = async () => {
-        if (offset < song.length) {
-          // 处理字母结果 CDEFG
-          let letter = song[offset].match(/[0-9]/g)[0]
-          // 处理 --7 判断有多少个-
-          let subKey = song[offset].split('-').length - 1
-          // 处理 ++7 判断有多少个+
-          let addKey = song[offset].split('+').length - 1
-          // 处理 7.. 判断有多少个.
-          let pointKey = song[offset].split('.').length - 1
-          let note;
-          let key;
-          let time;
-          switch (letter) {
-            case '1':
-              note = 'C'
-              break;
-            case '2':
-              note = 'D'
-              break;
-            case '3':
-              note = 'E'
-              break;
-            case '4':
-              note = 'F'
-              break;
-            case '5':
-              note = 'G'
-              break;
-            case '6':
-              note = 'A'
-              break;
-            case '7':
-              note = 'B'
-              break;
-          }
-          switch (subKey) {
-            case 0:
-              key = 4
-              break;
-            case 1:
-              key = 3
-              break;
-            case 2:
-              key = 2
-              break;
-          }
-          switch (addKey) {
-            case 0:
-              key = 4
-              break;
-            case 1:
-              key = 5
-              break;
-            case 2:
-              key = 6
-              break;
-          }
-          switch (pointKey) {
-            case 0:
-              time = 500
-              break;
-            case 1:
-              time = 1000
-              break;
-            case 2:
-              time = 1500
-              break;
-          }
-          console.log(note + key)
-          this.playNote(`${note + key}`)
-          await new Promise((resolve) => {
-            setTimeout(() => { resolve() }, time)
-          })
-          offset++
-          playSong()
-        } else {
-          return
-        }
+
+    handleObject(song, offset) {
+      // 处理字母结果 CDEFG
+      let letter = song[offset].match(/[0-9]/g)[0]
+      // 处理 --7 判断有多少个-
+      let subKey = song[offset].split('-').length - 1
+      // 处理 ++7 判断有多少个+
+      let addKey = song[offset].split('+').length - 1
+      // 处理 7.. 判断有多少个.
+      let pointKey = song[offset].split('.').length - 1
+      let note;
+      let key;
+      let time;
+      switch (letter) {
+        case '1':
+          note = 'C'
+          break;
+        case '2':
+          note = 'D'
+          break;
+        case '3':
+          note = 'E'
+          break;
+        case '4':
+          note = 'F'
+          break;
+        case '5':
+          note = 'G'
+          break;
+        case '6':
+          note = 'A'
+          break;
+        case '7':
+          note = 'B'
+          break;
       }
-      playSong()
+      switch (subKey) {
+        case 0:
+          key = 4
+          break;
+        case 1:
+          key = 3
+          break;
+        case 2:
+          key = 2
+          break;
+      }
+      switch (addKey) {
+        case 0:
+          key = 4
+          break;
+        case 1:
+          key = 5
+          break;
+        case 2:
+          key = 6
+          break;
+      }
+      switch (pointKey) {
+        case 0:
+          time = 500
+          break;
+        case 1:
+          time = 1000
+          break;
+        case 2:
+          time = 1500
+          break;
+      }
+      console.log(note + key)
+      this.playNote(`${note + key}`)
+      return time
     }
+    // 录音
+    recordSong() { }
   }
 </script>
 <style>

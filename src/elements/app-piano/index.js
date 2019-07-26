@@ -90,7 +90,7 @@ class AppPiano extends WeElement {
       h(
         "o-button",
         {
-          onClick: this.playSong2.bind(this, fuji),
+          onClick: this.playSong.bind(this, fuji),
           style: "margin-top:20px; width:280px;"
         },
         "\u70B9\u51FB\u5F39\u594F\uFF1A\u5BCC\u58EB\u5C71\u4E0B&\u7231\u60C5\u8F6C\u79FB"
@@ -284,115 +284,25 @@ class AppPiano extends WeElement {
 
   playSong(song) {
     let offset = 0;
+    let time = 0;
 
     let playSong = async () => {
       if (offset < song.length) {
-        console.log(song[offset]["note"]);
-        this.playNote(song[offset]["note"]);
+        switch (typeof song[offset]) {
+          case "string":
+            time = this.handleObject(song, offset);
+            break;
+
+          case "object":
+            console.log(song[offset]["note"]);
+            time = song[offset]["time"];
+            this.playNote(song[offset]["note"]);
+            break;
+        }
+
         await new Promise(resolve => {
-          setTimeout(() => {
-            resolve();
-          }, song[offset]["time"]);
-        });
-        offset++;
-        playSong();
-      } else {
-        return;
-      }
-    };
-
-    playSong();
-  }
-
-  playSong2(song) {
-    let offset = 0;
-
-    let playSong = async () => {
-      if (offset < song.length) {
-        let letter = song[offset].match(/[0-9]/g)[0];
-        let subKey = song[offset].split("-").length - 1;
-        let addKey = song[offset].split("+").length - 1;
-        let pointKey = song[offset].split(".").length - 1;
-        let note;
-        let key;
-        let time;
-
-        switch (letter) {
-          case "1":
-            note = "C";
-            break;
-
-          case "2":
-            note = "D";
-            break;
-
-          case "3":
-            note = "E";
-            break;
-
-          case "4":
-            note = "F";
-            break;
-
-          case "5":
-            note = "G";
-            break;
-
-          case "6":
-            note = "A";
-            break;
-
-          case "7":
-            note = "B";
-            break;
-        }
-
-        switch (subKey) {
-          case 0:
-            key = 4;
-            break;
-
-          case 1:
-            key = 3;
-            break;
-
-          case 2:
-            key = 2;
-            break;
-        }
-
-        switch (addKey) {
-          case 0:
-            key = 4;
-            break;
-
-          case 1:
-            key = 5;
-            break;
-
-          case 2:
-            key = 6;
-            break;
-        }
-
-        switch (pointKey) {
-          case 0:
-            time = 500;
-            break;
-
-          case 1:
-            time = 1000;
-            break;
-
-          case 2:
-            time = 1500;
-            break;
-        }
-
-        console.log(note + key);
-        this.playNote(`${note + key}`);
-        await new Promise(resolve => {
-          setTimeout(() => {
+          let timer = setTimeout(() => {
+            clearInterval(timer);
             resolve();
           }, time);
         });
@@ -405,6 +315,94 @@ class AppPiano extends WeElement {
 
     playSong();
   }
+
+  handleObject(song, offset) {
+    let letter = song[offset].match(/[0-9]/g)[0];
+    let subKey = song[offset].split("-").length - 1;
+    let addKey = song[offset].split("+").length - 1;
+    let pointKey = song[offset].split(".").length - 1;
+    let note;
+    let key;
+    let time;
+
+    switch (letter) {
+      case "1":
+        note = "C";
+        break;
+
+      case "2":
+        note = "D";
+        break;
+
+      case "3":
+        note = "E";
+        break;
+
+      case "4":
+        note = "F";
+        break;
+
+      case "5":
+        note = "G";
+        break;
+
+      case "6":
+        note = "A";
+        break;
+
+      case "7":
+        note = "B";
+        break;
+    }
+
+    switch (subKey) {
+      case 0:
+        key = 4;
+        break;
+
+      case 1:
+        key = 3;
+        break;
+
+      case 2:
+        key = 2;
+        break;
+    }
+
+    switch (addKey) {
+      case 0:
+        key = 4;
+        break;
+
+      case 1:
+        key = 5;
+        break;
+
+      case 2:
+        key = 6;
+        break;
+    }
+
+    switch (pointKey) {
+      case 0:
+        time = 500;
+        break;
+
+      case 1:
+        time = 1000;
+        break;
+
+      case 2:
+        time = 1500;
+        break;
+    }
+
+    console.log(note + key);
+    this.playNote(`${note + key}`);
+    return time;
+  }
+
+  recordSong() {}
 }
 
 AppPiano.css = `
