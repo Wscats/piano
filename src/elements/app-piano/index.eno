@@ -23,6 +23,7 @@
     </div>
     <o-button onClick={this.playSong.bind(this,moon)} style='margin-top:20px; width:280px;'>点击弹奏：月亮代表我的心</o-button>
     <o-button onClick={this.playSong.bind(this,fuji)} style='margin-top:20px; width:280px;'>点击弹奏：富士山下&爱情转移</o-button>
+    <o-button onClick={this.playSong.bind(this,later)} style='margin-top:20px; width:280px;'>点击弹奏：后来</o-button>
   </div>
 </template>
 <script>
@@ -31,6 +32,8 @@
   import moon from './songs/moon.js'
   // 演示：富士山下
   import fuji from './songs/fuji.js'
+  // 后来
+  import later from './songs/later.js'
   import 'omiu/button'
   export default class {
     install() {

@@ -1,7 +1,7 @@
 {
-  "name": "my-app",
+  "name": "omi-piano",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.2.2",

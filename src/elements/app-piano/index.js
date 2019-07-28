@@ -2,6 +2,7 @@ import { WeElement, define, h } from "omi";
 import notes from "./notes.js";
 import moon from "./songs/moon.js";
 import fuji from "./songs/fuji.js";
+import later from "./songs/later.js";
 import "omiu/button";
 
 class AppPiano extends WeElement {
@@ -94,6 +95,14 @@ class AppPiano extends WeElement {
           style: "margin-top:20px; width:280px;"
         },
         "\u70B9\u51FB\u5F39\u594F\uFF1A\u5BCC\u58EB\u5C71\u4E0B&\u7231\u60C5\u8F6C\u79FB"
+      ),
+      h(
+        "o-button",
+        {
+          onClick: this.playSong.bind(this, later),
+          style: "margin-top:20px; width:280px;"
+        },
+        "\u70B9\u51FB\u5F39\u594F\uFF1A\u540E\u6765"
       )
     );
   }
