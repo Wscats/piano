@@ -41,6 +41,7 @@ class AppPiano extends WeElement {
                 item.white.name
               ),
               h("audio", {
+                preload: "auto",
                 src: this.data.notes[item.white.name],
                 hidden: "true",
                 "data-note": item.white.name,
@@ -71,6 +72,7 @@ class AppPiano extends WeElement {
                 item.black.name
               ),
               h("audio", {
+                preload: "auto",
                 src: this.data.notes[item.white.name],
                 hidden: "true",
                 "data-note": item.white.name,
@@ -95,14 +97,6 @@ class AppPiano extends WeElement {
           style: "margin-top:20px; width:280px;"
         },
         "\u70B9\u51FB\u5F39\u594F\uFF1A\u5BCC\u58EB\u5C71\u4E0B&\u7231\u60C5\u8F6C\u79FB"
-      ),
-      h(
-        "o-button",
-        {
-          onClick: this.playSong.bind(this, later),
-          style: "margin-top:20px; width:280px;"
-        },
-        "\u70B9\u51FB\u5F39\u594F\uFF1A\u540E\u6765"
       )
     );
   }

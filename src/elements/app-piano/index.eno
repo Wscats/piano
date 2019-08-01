@@ -7,7 +7,7 @@
           onClick={this.playNote.bind(this,item.white.name)} data-key={item.white.keyCode}
           data-note={item.white.name}>
           <span class="piano-note">{item.white.name}</span>
-          <audio src={this.data.notes[item.white.name]} hidden='true' data-note={item.white.name}
+          <audio preload="auto" src={this.data.notes[item.white.name]} hidden='true' data-note={item.white.name}
             class='audioEle'></audio>
         </div>
         <div data-type="black" ref={e=>{ this[item.black.name] = e }} style={{
@@ -15,7 +15,7 @@
         }} class="piano-key__black" onClick={this.playNote.bind(this,item.black.name)} data-key={item.black.keyCode}
           data-note={item.black.name}>
           <span class="piano-note" style="color:#fff">{item.black.name}</span>
-          <audio src={this.data.notes[item.white.name]} hidden='true' data-note={item.white.name}
+          <audio preload="auto" src={this.data.notes[item.white.name]} hidden='true' data-note={item.white.name}
             class='audioEle'></audio>
         </div>
       </div>
@@ -23,7 +23,7 @@
     </div>
     <o-button onClick={this.playSong.bind(this,moon)} style='margin-top:20px; width:280px;'>点击弹奏：月亮代表我的心</o-button>
     <o-button onClick={this.playSong.bind(this,fuji)} style='margin-top:20px; width:280px;'>点击弹奏：富士山下&爱情转移</o-button>
-    <o-button onClick={this.playSong.bind(this,later)} style='margin-top:20px; width:280px;'>点击弹奏：后来</o-button>
+    <!-- <o-button onClick={this.playSong.bind(this,later)} style='margin-top:20px; width:280px;'>点击弹奏：后来</o-button> -->
   </div>
 </template>
 <script>
