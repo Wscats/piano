@@ -3,6 +3,7 @@ import notes from "./notes.js";
 import moon from "./songs/moon.js";
 import fuji from "./songs/fuji.js";
 import later from "./songs/later.js";
+import pgydyd from "./songs/pgydyd.js";
 import "omiu/button";
 
 class AppPiano extends WeElement {
@@ -89,6 +90,14 @@ class AppPiano extends WeElement {
           style: "margin-top:20px; width:280px;"
         },
         "\u70B9\u51FB\u5F39\u594F\uFF1A\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3"
+      ),
+      h(
+        "o-button",
+        {
+          onClick: this.playSong.bind(this, pgydyd),
+          style: "margin-top:20px; width:280px;"
+        },
+        "\u70B9\u51FB\u5F39\u594F\uFF1A\u84B2\u516C\u82F1\u7684\u7EA6\u5B9A"
       ),
       h(
         "o-button",
