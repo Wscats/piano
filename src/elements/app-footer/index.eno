@@ -1,0 +1,83 @@
+<template name="app-footer">
+    <div class="app-footer">
+        <hr class="mt-5" />
+        <div class="row mt-5">
+            <div class="col">
+                <div class="text-center">
+                    <h2>Enjoy it!</h2>
+                    {/*<h2>Installation</h2>
+                    <p class="mt-4">Install with yarn or npm:</p>
+                    <p class="mt-3">
+                        <code class="p-2 text-dark bg-yellow">yarn add omi-piano</code>
+                    </p>
+                    <p class="mt-4">Enjoy it!</p>*/}
+                </div>
+            </div>
+        </div>
+        <div class="bg-yellow mt-5 py-5">
+            <div class="container">
+                <div class="text-center text-secondary">Made with <span role="img"
+                        aria-label="keyboard emoji">🎵</span>by <a class="text-secondary"
+                        href="https://github.com/Wscats"><strong>@Eno Yao</strong></a></div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    // JS
+    export default class {
+        install() {
+            this.data = {
+                title: "omi"
+            }
+        }
+    }
+</script>
+<style lang="scss">
+    .app-footer{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+    }
+    hr {
+        margin: 0 50px;
+        border: 0;
+        border-top-color: currentcolor;
+        border-top-style: none;
+        border-top-width: 0px;
+        border-top: 1px solid rgba(0, 0, 0, .1);
+    }
+
+    hr {
+        box-sizing: content-box;
+        height: 0;
+        overflow: visible;
+    }
+
+    .bg-yellow {
+        background-color: #f8e8d5;
+    }
+
+    .container {
+        line-height: 50px;
+        height: 50px;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .text-secondary {
+        color: #6c757d !important;
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+
+    code{
+        padding: 10px;
+    }
+</style>

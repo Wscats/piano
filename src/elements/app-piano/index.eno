@@ -1,5 +1,5 @@
 <template name="app-piano">
-  <div>
+  <div class="">
     <div class="piano">
       {this.data.pianoKeys.map((item)=>{return(
       <div class="piano-key">
@@ -21,10 +21,21 @@
       </div>
       )})}
     </div>
-    <o-button onClick={this.playSong.bind(this,moon)} style='margin-top:20px; width:280px;'>点击弹奏：月亮代表我的心</o-button>
+    {/*<a href="https://github.com/Wscats/piano">
+      <img class="icon" src="https://github.githubassets.com/images/icons/emoji/unicode/263a.png" alt="☺" />
+      点击查看项目地址
+    </a>*/}
+    {/*<o-button onClick={this.playSong.bind(this,moon)} style='margin-top:20px; width:280px;'>点击弹奏：月亮代表我的心</o-button>
     <o-button onClick={this.playSong.bind(this,pgydyd)} style='margin-top:20px; width:280px;'>点击弹奏：蒲公英的约定</o-button>
-    <o-button onClick={this.playSong.bind(this,fuji)} style='margin-top:20px; width:280px;'>点击弹奏：富士山下&爱情转移</o-button>
-    
+    <o-button onClick={this.playSong.bind(this,fuji)} style='margin-top:20px; width:280px;'>点击弹奏：富士山下&爱情转移</o-button>*/}
+    <div class="text-center">
+      <p>Try playing it now:</p>
+      <div>
+        <button onClick={this.playSong.bind(this,moon)} class="btn btn-outline-info">月亮代表我的心</button>
+        <button onClick={this.playSong.bind(this,pgydyd)} class="btn btn-outline-info">蒲公英的约定</button>
+        <button onClick={this.playSong.bind(this,fuji)} class="btn btn-outline-info">富士山下&爱情转移</button>
+      </div>
+    </div>
     <!-- <o-button onClick={this.playSong.bind(this,later)} style='margin-top:20px; width:280px;'>点击弹奏：后来</o-button> -->
   </div>
 </template>
@@ -181,7 +192,7 @@
     }
     playNote(name) {
       let audio = this[name].childNodes[1]
-      this[name].style.background = `linear-gradient(-30deg, #616161, #fff)`
+      this[name].style.background = `linear-gradient(-20deg, #3330fb, #000, #222)`
       let timer = setTimeout(() => {
         // console.log(this[name].getAttribute('data-type'))
         this[name].getAttribute('data-type') === 'white' ? this[name].style.background = `linear-gradient(-30deg, #f8f8f8, #fff)` : this[name].style.background = `linear-gradient(-20deg, #222, #000, #222)`
@@ -199,13 +210,29 @@
           switch (typeof song[offset]) {
             // 简谱2演奏方法 根据 ++12345--6. 简单旋律情况
             case 'string':
-              time = this.handleObject(song, offset)
+              let letters = song[offset].match(/[0-9]/g)
+              switch (letters.length) {
+                case 1:
+                  time = this.handleString(song, offset)
+                  break
+                default:
+                  time = this.handleStrings(song, offset)
+                  break
+              }
               break;
             // 简谱1演奏方法 根据 CDEFGAB，复杂旋律情况，比如有和弦
             case 'object':
               console.log(song[offset]['note'])
               time = song[offset]['time'];
               this.playNote(song[offset]['note'])
+              break;
+            case 'number':
+              // 休止符
+              switch (song[offset]) {
+                case 0:
+                  time = 1000
+                  break
+              }
               break;
           }
           await new Promise((resolve) => {
@@ -222,8 +249,103 @@
       }
       playSong()
     }
-
-    handleObject(song, offset) {
+    // 处理多音
+    // 处理 ['++3--45.']
+    handleStrings(song, offset) {
+      let reg = /[0-9]/g
+      let str = song[offset]
+      let order = 1
+      let result = []
+      while (true) {
+        let temp = reg.exec(str)
+        if (temp) {
+          result.push({
+            text: temp[0], index: temp.index, order: order
+          })
+          order++
+        } else {
+          break
+        }
+      }
+      result.map((item) => {
+        switch (str[item.index - 1]) {
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
+          case '7':
+            break;
+          // 处理+5
+          case '+':
+            item.text = `+${item.text}`
+            switch (str[item.index - 2]) {
+              // 处理++5
+              case '+':
+                item.text = `+${item.text}`
+                break;
+            }
+            break;
+          case '-':
+            item.text = `-${item.text}`
+            switch (str[item.index - 2]) {
+              case '-':
+                item.text = `-${item.text}`
+                break;
+            }
+            break;
+          // 处理++#5
+          case '#':
+            item.text = `#${item.text}`
+            switch (str[item.index - 2]) {
+              case '-':
+                item.text = `-${item.text}`
+                switch (str[item.index - 3]) {
+                  case '-':
+                    item.text = `-${item.text}`
+                    break;
+                }
+                break;
+              case '+':
+                item.text = `+${item.text}`
+                switch (str[item.index - 3]) {
+                  case '+':
+                    item.text = `+${item.text}`
+                    break;
+                }
+                break;
+            }
+            break;
+        }
+        // 处理5..
+        switch (str[item.index + 1]) {
+          case '.':
+            item.text = `${item.text}.`
+            switch (str[item.index + 2]) {
+              // 处理5..
+              case '.':
+                item.text = `${item.text}.`
+                break;
+            }
+            break;
+        }
+      })
+      // 转化为['3','4','5']
+      let notes = result.map((item) => {
+        return item.text
+      })
+      // 存放多个按键的时间
+      let time = []
+      notes.forEach((item, index) => {
+        time.push(this.handleString(notes, index))
+      })
+      // 取最大的时间返回
+      return time.sort()[0]
+    }
+    // 处理单音
+    // 处理 ['++3','--4','5.']
+    handleString(song, offset) {
       // 处理字母结果 CDEFG
       let letter = song[offset].match(/[0-9]/g)[0]
       // 处理 --7 判断有多少个-
@@ -232,10 +354,16 @@
       let addKey = song[offset].split('+').length - 1
       // 处理 7.. 判断有多少个.
       let pointKey = song[offset].split('.').length - 1
+      // 处理 #7 判断有多少个.
+      let halfKey = song[offset].split('#').length - 1
       let note;
       let key;
       let time;
       switch (letter) {
+        // 休止符
+        case '0':
+          return time = 1000
+          break;
         case '1':
           note = 'C'
           break;
@@ -291,8 +419,8 @@
           time = 1500
           break;
       }
-      console.log(note + key)
-      this.playNote(`${note + key}`)
+      console.log(`${note + (halfKey > 0 ? '#' : '') + key}`)
+      this.playNote(`${note + (halfKey > 0 ? '#' : '') + key}`)
       return time
     }
     // 录音
@@ -305,7 +433,12 @@
     padding: 0;
   }
 
+  .icon {
+    width: 24px;
+  }
+
   .piano {
+    margin: 0 200px;
     background: linear-gradient(-65deg, #000, #222, #000, #666, #222 75%);
     border-top: .8rem solid #282828;
     -webkit-box-shadow: inset 0 -1px 1px hsla(0, 0%, 100%, .5), inset -0.4rem 0.4rem #282828;
@@ -314,12 +447,12 @@
     display: -ms-flexbox;
     display: flex;
     height: 80vh;
-    height: 60vh;
+    height: 20vh;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
     overflow: hidden;
-    padding-bottom: 5%;
+    padding-bottom: 2%;
     padding-left: 2.5%;
     padding-right: 2.5%;
   }
@@ -365,8 +498,52 @@
 
   .piano-note {
     color: #000;
-    font-size: 8px;
+    /* 隐藏音符显示 */
+    /* font-size: 8px; */
+    font-size: 0px;
     text-align: center;
     height: 20px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .text-center {
+    margin: 15px;
+    text-align: center !important;
+  }
+
+  /* .btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+  } */
+
+  .btn-outline-info {
+    color: #17a2b8;
+    background-color: transparent;
+    background-image: none;
+    border-color: #17a2b8;
+
+  }
+
+  .btn {
+    text-transform: none;
+    margin: 15px;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    /* white-space: nowrap; */
+    vertical-align: middle;
+    /* -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; */
+    border: 1px solid #17a2b8;
+    padding: 8px 8px;
+    font-size: 16px;
+    line-height: 16px;
+    border-radius: 2.5px;
+    /* transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; */
+
   }
 </style>
