@@ -75,5 +75,5 @@ class AppFooter extends WeElement {
   }
 }
 
-AppFooter.css = `.app-footer{position:fixed;bottom:0;width:100%;left:0}hr{margin:0 50px;border:0;border-top-color:currentcolor;border-top-style:none;border-top-width:0px;border-top:1px solid rgba(0,0,0,0.1)}hr{box-sizing:content-box;height:0;overflow:visible}.bg-yellow{background-color:#f8e8d5}.container{line-height:50px;height:50px;width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.text-secondary{color:#6c757d !important}.text-center{text-align:center !important}code{padding:10px}`;
+AppFooter.css = `.app-footer{margin-bottom:55px}.bg-yellow{position:fixed;z-index:10;bottom:0;width:100%;left:0}hr{margin:0 50px;border:0;border-top-color:currentcolor;border-top-style:none;border-top-width:0px;border-top:1px solid rgba(0,0,0,0.1)}hr{box-sizing:content-box;height:0;overflow:visible}.bg-yellow{background-color:#f8e8d5}.container{line-height:50px;height:50px;width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.text-secondary{color:#6c757d !important}.text-center{text-align:center !important}code{padding:10px}`;
 define("app-footer", AppFooter);

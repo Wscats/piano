@@ -184,7 +184,7 @@ AppHeader.css = `
     }
 
     p {
-        margin-top: 0;
+        margin: 0 10px;
     }
 `;
 define("app-header", AppHeader);

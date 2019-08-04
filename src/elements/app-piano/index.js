@@ -309,7 +309,7 @@ class AppPiano extends WeElement {
     audio.play();
   }
 
-  playSong(song) {
+  playSongByInterval(song) {
     let offset = 0;
     let time = 0;
 
@@ -361,6 +361,51 @@ class AppPiano extends WeElement {
     };
 
     playSong();
+  }
+
+  playSong(song) {
+    clearInterval(this.interval);
+    let offset = 0;
+    let time = 0;
+    this.interval = setInterval(() => {
+      if (offset < song.length) {
+        switch (typeof song[offset]) {
+          case "string":
+            let letters = song[offset].match(/[0-9]/g);
+
+            switch (letters.length) {
+              case 1:
+                time = this.handleString(song, offset);
+                break;
+
+              default:
+                time = this.handleStrings(song, offset);
+                break;
+            }
+
+            break;
+
+          case "object":
+            console.log(song[offset]["note"]);
+            time = song[offset]["time"];
+            this.playNote(song[offset]["note"]);
+            break;
+
+          case "number":
+            switch (song[offset]) {
+              case 0:
+                time = 1000;
+                break;
+            }
+
+            break;
+        }
+
+        ++offset;
+      } else {
+        clearInterval(this.interval);
+      }
+    }, 500);
   }
 
   handleStrings(song, offset) {
@@ -592,6 +637,14 @@ AppPiano.css = `
     padding-bottom: 2%;
     padding-left: 2.5%;
     padding-right: 2.5%;
+  }
+
+  @media screen and (max-width: 1000px) {
+
+    /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+    .piano {
+      margin: 0 10px;
+    }
   }
 
   .piano-key {

@@ -201,8 +201,8 @@
       audio.currentTime = 0;
       audio.play();
     }
-
-    playSong(song) {
+    // 使用递归弹奏 具有时间效果
+    playSongByInterval(song) {
       let offset = 0
       let time = 0
       let playSong = async () => {
@@ -248,6 +248,47 @@
         }
       }
       playSong()
+    }
+    // 使用定时器弹奏
+    playSong(song) {
+      clearInterval(this.interval)
+      let offset = 0
+      let time = 0
+      this.interval = setInterval(() => {
+        if (offset < song.length) {
+          switch (typeof song[offset]) {
+            // 简谱2演奏方法 根据 ++12345--6. 简单旋律情况
+            case 'string':
+              let letters = song[offset].match(/[0-9]/g)
+              switch (letters.length) {
+                case 1:
+                  time = this.handleString(song, offset)
+                  break
+                default:
+                  time = this.handleStrings(song, offset)
+                  break
+              }
+              break;
+            // 简谱1演奏方法 根据 CDEFGAB，复杂旋律情况，比如有和弦
+            case 'object':
+              console.log(song[offset]['note'])
+              time = song[offset]['time'];
+              this.playNote(song[offset]['note'])
+              break;
+            case 'number':
+              // 休止符
+              switch (song[offset]) {
+                case 0:
+                  time = 1000
+                  break
+              }
+              break;
+          }
+          ++offset
+        } else {
+          clearInterval(this.interval)
+        }
+      }, 500)
     }
     // 处理多音
     // 处理 ['++3--45.']
@@ -455,6 +496,14 @@
     padding-bottom: 2%;
     padding-left: 2.5%;
     padding-right: 2.5%;
+  }
+
+  @media screen and (max-width: 1000px) {
+
+    /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+    .piano {
+      margin: 0 10px;
+    }
   }
 
   .piano-key {

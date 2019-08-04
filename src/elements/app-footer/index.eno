@@ -35,7 +35,11 @@
 </script>
 <style lang="scss">
     .app-footer{
+        margin-bottom: 55px;
+    }
+    .bg-yellow{
         position: fixed;
+        z-index: 10;
         bottom: 0;
         width: 100%;
         left: 0;
