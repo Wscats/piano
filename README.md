@@ -32,7 +32,7 @@
 
 </div>
 
-<img src="./public/demo.png">
+<img src="https://raw.githubusercontent.com/Wscats/piano/master/public/demo.png" />
 
 # Usage
 
