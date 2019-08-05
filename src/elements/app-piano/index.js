@@ -309,7 +309,7 @@ class AppPiano extends WeElement {
     audio.play();
   }
 
-  playSongByInterval(song) {
+  playSong(song) {
     let offset = 0;
     let time = 0;
 
@@ -363,7 +363,7 @@ class AppPiano extends WeElement {
     playSong();
   }
 
-  playSong(song) {
+  playSongByInterval(song) {
     clearInterval(this.interval);
     let offset = 0;
     let time = 0;

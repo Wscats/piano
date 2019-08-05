@@ -202,7 +202,7 @@
       audio.play();
     }
     // 使用递归弹奏 具有时间效果
-    playSongByInterval(song) {
+    playSong(song) {
       let offset = 0
       let time = 0
       let playSong = async () => {
@@ -251,7 +251,7 @@
     }
     // 使用定时器弹奏
     // playSongByInterval
-    playSong(song) {
+    playSongByInterval(song) {
       clearInterval(this.interval)
       let offset = 0
       let time = 0
