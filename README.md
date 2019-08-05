@@ -84,7 +84,7 @@ npm run build
 # Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. 
-欢迎提PR和在[issue](https://github.com/Wscats/piano/issues/new)中讨论问题，说说您的建议。
+欢迎提 PR 和在 [issue](https://github.com/Wscats/piano/issues/new) 中讨论问题，说说您的建议。
 
 Please make sure to update tests as appropriate.
 
