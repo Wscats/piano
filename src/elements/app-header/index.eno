@@ -10,6 +10,8 @@
                         <a class="btn btn-outline-light btn-lg" href="https://github.com/Wscats/piano">View docs on
                             Github
                         </a>
+                        <a class="btn btn-outline-light btn-lg" href="https://github.com/Wscats/piano">查看该项目Github地址
+                        </a>
                     </div>
                 </div>
             </div>
@@ -111,6 +113,7 @@
     }
 
     a {
+        margin: 0 10px;
         text-decoration: none;
     }
 

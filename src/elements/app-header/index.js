@@ -42,6 +42,14 @@ class AppHeader extends WeElement {
                   href: "https://github.com/Wscats/piano"
                 },
                 "View docs on Github"
+              ),
+              h(
+                "a",
+                {
+                  class: "btn btn-outline-light btn-lg",
+                  href: "https://github.com/Wscats/piano"
+                },
+                "\u67E5\u770B\u8BE5\u9879\u76EEGithub\u5730\u5740"
               )
             )
           )
@@ -175,6 +183,7 @@ AppHeader.css = `
     }
 
     a {
+        margin: 0 10px;
         text-decoration: none;
     }
 

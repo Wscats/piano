@@ -250,6 +250,7 @@
       playSong()
     }
     // 使用定时器弹奏
+    // playSongByInterval
     playSong(song) {
       clearInterval(this.interval)
       let offset = 0

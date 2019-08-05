@@ -1,7 +1,8 @@
 <div align="center">
-<p><img width="150" src="./public/logo.png"></p>
+<!-- <p><img width="150" src="./public/logo.png"></p> -->
 
 <h1>Omi Piano</h1>
+
 
 <p>
   <strong>Build piano with Omi and Omi Snippets</strong>
@@ -14,6 +15,7 @@
   <a href="https://github.com/Wscats/omi-electron/releases/tag/1.2">Download Mac Version Zip</a> 
   -->
 </p>
+
 
 <p>
   <sub>Made with ❤︎ by
@@ -30,13 +32,15 @@
 
 </div>
 
-# Demo Address
+<img src="./public/demo.png">
+
+# Usage
 
 [演示地址](https://wscats.github.io/piano/build/)，代码打久了，放开双手远离屏幕，让`Omi`为你演奏几首钢琴曲，如果您喜欢的话，请点个赞吧~
 
 # Develop
 
-<img src="./public/demo.png">
+<!-- <img src="./public/demo.png"> -->
 
 ```bash
 # 获取远程仓库代码
@@ -50,14 +54,35 @@ npm start
 # 在浏览器访问 http://localhost:3000
 ```
 
-# Release
+# Installation
 
-发布属于自己的演奏版本
+Use the package manager npm to install.
+使用 npm 包管理器安装。
+
 ```bash
+npm install omi-piano
+```
+
+run or release.
+运行或者发布属于自己的演奏版本。
+
+
+```bash
+# 进入目录
+cd omi-piano
+# 安装依赖
+npm install
+# 启动项目
+npm start
+# 发布自已的演奏版本
 npm run build
 ```
 
+# Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
 # License
-
-MIT 
-
+[MIT](https://choosealicense.com/licenses/mit/)
