@@ -36,7 +36,10 @@
 
 # Usage
 
-[演示地址](https://wscats.github.io/piano/build/)，代码打久了，放开双手远离屏幕，让`Omi`为你演奏几首钢琴曲，如果您喜欢的话，请点个赞吧~
+[DEMO & 演示地址](https://wscats.github.io/piano/build/)
+
+The code has been playing for a long time. Keep your hands away from the screen and let `Omi` play some piano music for you. If you like it, please give me a like.
+代码打久了，放开双手远离屏幕，让`Omi`为你演奏几首钢琴曲，如果您喜欢的话，请点个赞吧~
 
 # Develop
 
@@ -80,7 +83,8 @@ npm run build
 
 # Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. 
+欢迎提PR和在[issue](https://github.com/Wscats/piano/issues/new)中讨论问题，说说您的建议。
 
 Please make sure to update tests as appropriate.
 
