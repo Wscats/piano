@@ -47,6 +47,7 @@ The code has been playing for a long time. Keep your hands away from the screen 
 # Develop
 
 <!-- <img src="./public/demo.png"> -->
+Dev build and run. 开发构建和运行。
 
 ```bash
 # 获取远程仓库代码
