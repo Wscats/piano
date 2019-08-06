@@ -51,7 +51,7 @@
 # Develop & Installation
 
 <!-- <img src="./public/demo.png"> -->
-Dev build and run. 开发构建和运行。
+开发，构建和运行。
 
 ```bash
 # 获取远程仓库代码
@@ -65,16 +65,13 @@ npm start
 # 在浏览器访问 http://localhost:3000
 ```
 
-Or use the package manager npm to install.
 使用 npm 包管理器安装。
 
 ```bash
 npm install omi-piano
 ```
 
-Run or release.
 运行或者发布属于自己的演奏版本。
-
 
 ```bash
 # 进入目录
@@ -483,7 +480,7 @@ playSong(song) {
 
 ## 月亮代表我的心
 
-我们还可以演奏另一首耳熟能详的的钢琴曲《月亮代表我的心》
+我们还可以演奏另一首耳熟能详的的钢琴曲《月亮代表我的心》。
 ```js
 'Ctrl+5', '1', '3', '5', '1', 'Ctrl+7', '3', '5', '5', '6', '7', 'Option+1', '6', '5', '3', '2', '1', '1', '1', '3', '2', '1', '1', '1', '2', '3', '2', '1', 'Ctrl+6', '2',
 
@@ -504,12 +501,9 @@ playSong(song) {
 '2', '3', '2', 'Ctrl+6', 'Ctrl+7', '1', '2', '1'
 ```
 
-# Contributing
+# Contributing 
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. 
-欢迎提 PR 和在 [issue](https://github.com/Wscats/piano/issues/new) 中讨论问题，说说您的建议。
-
-Please make sure to update tests as appropriate.
+欢迎贡献代码，提 PR 和在 [issue](https://github.com/Wscats/piano/issues/new) 中讨论问题，说说您的建议。
 
 # License
 [MIT](https://choosealicense.com/licenses/mit/)
