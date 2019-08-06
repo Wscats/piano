@@ -36,7 +36,10 @@
 
 # Usage
 
-[DEMO & 演示地址](https://wscats.github.io/piano/build/)
+> 体验地址： https://wscats.github.io/piano/build/
+
+> 项目地址： https://github.com/Wscats/piano
+
 
 The code has been playing for a long time. Keep your hands away from the screen and let `Omi` play some piano music for you. If you like it, please give me a like.
 代码打久了，放开双手远离屏幕，让`Omi`为你演奏几首钢琴曲，如果您喜欢的话，请点个赞吧~
