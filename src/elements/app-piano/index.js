@@ -7,6 +7,16 @@ import pgydyd from "./songs/pgydyd.js";
 import "omiu/button";
 
 class AppPiano extends WeElement {
+  constructor(...args) {
+    super(...args);
+
+    this.add = () => this.store.add();
+
+    this.sub = () => this.store.sub();
+
+    this.setSong = song => this.store.setSong(song);
+  }
+
   render(props) {
     return h(
       "div",
@@ -90,34 +100,56 @@ class AppPiano extends WeElement {
         {
           class: "text-center"
         },
-        h("p", null, "Try playing it now:"),
+        h(
+          "p",
+          null,
+          "Click the button below to let the piano play the song automatically:"
+        ),
+        h(
+          "p",
+          null,
+          "\u70B9\u51FB\u4E0B\u9762\u6309\u94AE\u8BA9\u94A2\u7434\u81EA\u52A8\u6F14\u594F\u6B4C\u66F2:"
+        ),
         h(
           "div",
           null,
-          h(
-            "button",
-            {
-              onClick: this.playSong.bind(this, moon),
-              class: "btn btn-outline-info"
-            },
-            "\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3"
-          ),
-          h(
-            "button",
-            {
-              onClick: this.playSong.bind(this, pgydyd),
-              class: "btn btn-outline-info"
-            },
-            "\u84B2\u516C\u82F1\u7684\u7EA6\u5B9A"
-          ),
-          h(
-            "button",
-            {
-              onClick: this.playSong.bind(this, fuji),
-              class: "btn btn-outline-info"
-            },
-            "\u5BCC\u58EB\u5C71\u4E0B&\u7231\u60C5\u8F6C\u79FB"
-          )
+          this.store.data.count > 0
+            ? h(
+                "button",
+                {
+                  onClick: this.stopSong.bind(this),
+                  class: "btn btn-outline-info btn-stop"
+                },
+                "Stop & \u6682\u505C"
+              )
+            : h(
+                "div",
+                null,
+                h(
+                  "button",
+                  {
+                    onClick: this.playSong.bind(this, moon),
+                    class: "btn btn-outline-info"
+                  },
+                  "\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3"
+                ),
+                h(
+                  "button",
+                  {
+                    onClick: this.playSong.bind(this, pgydyd),
+                    class: "btn btn-outline-info"
+                  },
+                  "\u84B2\u516C\u82F1\u7684\u7EA6\u5B9A"
+                ),
+                h(
+                  "button",
+                  {
+                    onClick: this.playSong.bind(this, fuji),
+                    class: "btn btn-outline-info"
+                  },
+                  "\u5BCC\u58EB\u5C71\u4E0B&\u7231\u60C5\u8F6C\u79FB"
+                )
+              )
         )
       )
     );
@@ -288,6 +320,17 @@ class AppPiano extends WeElement {
         }
       }
     };
+
+    this.timer = setTimeout(() => {
+      this.playSong(moon);
+    }, 5000);
+  }
+
+  stopSong() {
+    clearTimeout(this.timer);
+    this.store.data.song = [];
+    this.store.data.count = 0;
+    console.log("reset");
   }
 
   playNote(name) {
@@ -310,11 +353,12 @@ class AppPiano extends WeElement {
   }
 
   playSong(song) {
+    this.setSong([...song]);
     let offset = 0;
     let time = 0;
 
     let playSong = async () => {
-      if (offset < song.length) {
+      if (offset < song.length && this.store.data.song.length > 0) {
         switch (typeof song[offset]) {
           case "string":
             let letters = song[offset].match(/[0-9]/g);
@@ -354,8 +398,11 @@ class AppPiano extends WeElement {
           }, time);
         });
         offset++;
+        this.add();
         playSong();
       } else {
+        this.store.data.song = [];
+        this.store.data.count = 0;
         return;
       }
     };
@@ -734,7 +781,17 @@ AppPiano.css = `
     line-height: 16px;
     border-radius: 2.5px;
     /* transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; */
+  }
 
+  .btn-stop {
+    color: #ff7171;
+    border-color: #ff7171;
   }
 `;
+AppPiano.use = [
+  {
+    count: "count",
+    song: "song"
+  }
+];
 define("app-piano", AppPiano);

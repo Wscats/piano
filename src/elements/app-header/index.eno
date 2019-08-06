@@ -17,7 +17,8 @@
             </div>
         </div>
         <div class="text-center">
-            <p class="">Try it by clicking, tapping, or using your keyboard:</p>
+            <p class="">Try it by clicking, tapping, or using your keyboard 1 to 9:</p>
+            <p class="">鼠标点击钢琴键或者键盘按数字键 1 ~ 9:</p>
             <div style="color: rgb(119, 119, 119);"><svg fill="currentColor" preserveAspectRatio="xMidYMid meet"
                     height="32" width="32" viewBox="0 0 40 40" style="vertical-align: middle;">
                     <g>

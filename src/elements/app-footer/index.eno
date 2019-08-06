@@ -4,13 +4,25 @@
         <div class="row mt-5">
             <div class="col">
                 <div class="text-center">
-                    <h2>Enjoy it!</h2>
-                    {/*<h2>Installation</h2>
-                    <p class="mt-4">Install with yarn or npm:</p>
-                    <p class="mt-3">
-                        <code class="p-2 text-dark bg-yellow">yarn add omi-piano</code>
+                    <!-- <h2>Enjoy it!</h2> -->
+                    <p class="mt-4">
+                        You can click on the keyboard and play the melody that belongs to you. Here is an example of a
+                        piano piece:
                     </p>
-                    <p class="mt-4">Enjoy it!</p>*/}
+                    <p>你可以点击键盘依顺序按以下键，控制好节奏演奏属于你的旋律，下面是一首钢琴曲的例子:</p>
+                    <p class="mt-4">Enjoy it!</p>
+                    {this.store.data.song.map((item)=>{if(item[0].note){return(
+                    <p class="mt-3 code">
+                        <code class="p-2 text-dark">{
+                            item.map((item2)=>{
+                                if(item2.note){
+                                    return(
+                                        <span style={{color:this.store.data.count===item2.index?'red':'black'}}>{this.data.keys[item2.note]},</span>
+                                    )
+                                }
+                            })}
+                        </code>
+                    </p>)}})}
                 </div>
             </div>
         </div>
@@ -24,26 +36,26 @@
     </div>
 </template>
 <script>
+    // 按键和音符的关系
+    import keys from './keys.js'
     // JS
     export default class {
+        static use = [
+            {
+                count: 'count',
+                song: 'song'
+            }
+        ]
         install() {
             this.data = {
-                title: "omi"
+                title: "omi",
+                song: [],
+                keys
             }
         }
     }
 </script>
 <style lang="scss">
-    .app-footer{
-        margin-bottom: 55px;
-    }
-    .bg-yellow{
-        position: fixed;
-        z-index: 10;
-        bottom: 0;
-        width: 100%;
-        left: 0;
-    }
     hr {
         margin: 0 50px;
         border: 0;
@@ -67,8 +79,6 @@
         line-height: 50px;
         height: 50px;
         width: 100%;
-        padding-right: 15px;
-        padding-left: 15px;
         margin-right: auto;
         margin-left: auto;
     }
@@ -81,7 +91,23 @@
         text-align: center !important;
     }
 
-    code{
-        padding: 10px;
+    .code {
+        padding: 0 250px;
+    }
+
+    @media screen and (max-width: 1000px) {
+
+        /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+        .code {
+            padding: 0 20px;
+        }
+    }
+
+    code {
+        overflow: hidden;
+        background-color: #ececec;
+        width: 100%;
+        display: block;
+        padding: 10px 0;
     }
 </style>

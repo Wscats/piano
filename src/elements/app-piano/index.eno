@@ -29,11 +29,18 @@
     <o-button onClick={this.playSong.bind(this,pgydyd)} style='margin-top:20px; width:280px;'>点击弹奏：蒲公英的约定</o-button>
     <o-button onClick={this.playSong.bind(this,fuji)} style='margin-top:20px; width:280px;'>点击弹奏：富士山下&爱情转移</o-button>*/}
     <div class="text-center">
-      <p>Try playing it now:</p>
+      <p>Click the button below to let the piano play the song automatically:</p>
+      <p>点击下面按钮让钢琴自动演奏歌曲:</p>
       <div>
-        <button onClick={this.playSong.bind(this,moon)} class="btn btn-outline-info">月亮代表我的心</button>
-        <button onClick={this.playSong.bind(this,pgydyd)} class="btn btn-outline-info">蒲公英的约定</button>
-        <button onClick={this.playSong.bind(this,fuji)} class="btn btn-outline-info">富士山下&爱情转移</button>
+        {this.store.data.count>0?(
+        <button onClick={this.stopSong.bind(this)} class="btn btn-outline-info btn-stop">Stop & 暂停</button>
+        ):(
+        <div>
+          <button onClick={this.playSong.bind(this,moon)} class="btn btn-outline-info">月亮代表我的心</button>
+          <button onClick={this.playSong.bind(this,pgydyd)} class="btn btn-outline-info">蒲公英的约定</button>
+          <button onClick={this.playSong.bind(this,fuji)} class="btn btn-outline-info">富士山下&爱情转移</button>
+        </div>
+        )}
       </div>
     </div>
     <!-- <o-button onClick={this.playSong.bind(this,later)} style='margin-top:20px; width:280px;'>点击弹奏：后来</o-button> -->
@@ -51,6 +58,12 @@
   import pgydyd from './songs/pgydyd.js'
   import 'omiu/button'
   export default class {
+    static use = [
+      { count: 'count', song: 'song' }
+    ]
+    add = () => this.store.add()
+    sub = () => this.store.sub()
+    setSong = (song) => this.store.setSong(song)
     install() {
       this.data = {
         // 琴音，所有音符的播放地址
@@ -189,6 +202,17 @@
           }
         }
       };
+      // 进入页面后5秒后自动播放
+      this.timer = setTimeout(() => {
+        this.playSong(moon)
+      }, 5000)
+    }
+    // 暂停播放
+    stopSong() {
+      clearTimeout(this.timer)
+      this.store.data.song = []
+      this.store.data.count = 0
+      console.log('reset')
     }
     playNote(name) {
       let audio = this[name].childNodes[1]
@@ -203,10 +227,12 @@
     }
     // 使用递归弹奏 具有时间效果
     playSong(song) {
+      this.setSong([...song])
       let offset = 0
       let time = 0
       let playSong = async () => {
-        if (offset < song.length) {
+        // 右边是从外部来中断递归
+        if (offset < song.length && this.store.data.song.length > 0) {
           switch (typeof song[offset]) {
             // 简谱2演奏方法 根据 ++12345--6. 简单旋律情况
             case 'string':
@@ -242,8 +268,13 @@
             }, time)
           })
           offset++
+          // 自定义事件，跟下面底部的音符自动跳动结合
+          this.add()
           playSong()
         } else {
+          // 暂停播放
+          this.store.data.song = []
+          this.store.data.count = 0
           return;
         }
       }
@@ -594,6 +625,10 @@
     line-height: 16px;
     border-radius: 2.5px;
     /* transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; */
+  }
 
+  .btn-stop {
+    color: #ff7171;
+    border-color: #ff7171;
   }
 </style>

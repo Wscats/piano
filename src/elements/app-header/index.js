@@ -65,7 +65,14 @@ class AppHeader extends WeElement {
           {
             class: ""
           },
-          "Try it by clicking, tapping, or using your keyboard:"
+          "Try it by clicking, tapping, or using your keyboard 1 to 9:"
+        ),
+        h(
+          "p",
+          {
+            class: ""
+          },
+          "\u9F20\u6807\u70B9\u51FB\u94A2\u7434\u952E\u6216\u8005\u952E\u76D8\u6309\u6570\u5B57\u952E 1 ~ 9:"
         ),
         h(
           "div",
