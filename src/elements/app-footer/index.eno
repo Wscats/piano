@@ -36,6 +36,8 @@
     </div>
 </template>
 <script>
+    // 演示：月亮代表我的心
+    import moon from '../app-piano/songs/moon.js'
     // 按键和音符的关系
     import keys from './keys.js'
     // JS
@@ -46,12 +48,14 @@
                 song: 'song'
             }
         ]
+        setSong = (song) => this.store.setSong(song)
         install() {
             this.data = {
                 title: "omi",
                 song: [],
                 keys
             }
+            this.setSong(moon)
         }
     }
 </script>

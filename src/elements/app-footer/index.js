@@ -1,7 +1,14 @@
 import { WeElement, define, h } from "omi";
+import moon from "../app-piano/songs/moon.js";
 import keys from "./keys.js";
 
 class AppFooter extends WeElement {
+  constructor(...args) {
+    super(...args);
+
+    this.setSong = song => this.store.setSong(song);
+  }
+
   render(props) {
     return h(
       "div",
@@ -126,6 +133,7 @@ class AppFooter extends WeElement {
       song: [],
       keys
     };
+    this.setSong(moon);
   }
 }
 

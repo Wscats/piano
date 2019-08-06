@@ -320,10 +320,6 @@ class AppPiano extends WeElement {
         }
       }
     };
-
-    this.timer = setTimeout(() => {
-      this.playSong(moon);
-    }, 5000);
   }
 
   stopSong() {
@@ -401,6 +397,7 @@ class AppPiano extends WeElement {
         this.add();
         playSong();
       } else {
+        clearTimeout(this.timer);
         this.store.data.song = [];
         this.store.data.count = 0;
         return;

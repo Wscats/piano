@@ -203,9 +203,9 @@
         }
       };
       // 进入页面后5秒后自动播放
-      this.timer = setTimeout(() => {
-        this.playSong(moon)
-      }, 5000)
+      // this.timer = setTimeout(() => {
+      //   this.playSong(moon)
+      // }, 5000)
     }
     // 暂停播放
     stopSong() {
@@ -273,6 +273,7 @@
           playSong()
         } else {
           // 暂停播放
+          clearTimeout(this.timer)
           this.store.data.song = []
           this.store.data.count = 0
           return;
