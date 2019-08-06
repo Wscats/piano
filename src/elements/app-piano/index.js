@@ -342,7 +342,7 @@ class AppPiano extends WeElement {
         : (this[
             name
           ].style.background = `linear-gradient(-20deg, #222, #000, #222)`);
-      clearInterval(timer);
+      clearTimeout(timer);
     }, 1000);
     audio.currentTime = 0;
     audio.play();

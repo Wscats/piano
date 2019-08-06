@@ -220,7 +220,8 @@
       let timer = setTimeout(() => {
         // console.log(this[name].getAttribute('data-type'))
         this[name].getAttribute('data-type') === 'white' ? this[name].style.background = `linear-gradient(-30deg, #f8f8f8, #fff)` : this[name].style.background = `linear-gradient(-20deg, #222, #000, #222)`
-        clearInterval(timer)
+        // clearInterval(timer)
+        clearTimeout(timer)
       }, 1000)
       audio.currentTime = 0;
       audio.play();
