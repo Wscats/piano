@@ -118,9 +118,8 @@ export default {
 
 当然实际情况还有全音和半音的区分，比如`A`的半音就是`A#`，还有中音，高音和倍高音，我们这里用`A4`表示中音，`A5`表示高音，`A6`表示倍高音，所以表格可以继续整理得更清晰，当我们要弹奏中音`A4`，只需要按键盘上的数字键`6`，如果要弹奏高音`A5`，只需要用组合键`Option+6`，我们只需要举一反三，就可以知道每个音符对应的键盘按键。
 
-|||||||||
-|-|-|-|-|-|-|-|-|
 |倍低音|C2|D2|E2|F2|G2|A2|B2|
+|-|-|-|-|-|-|-|-|
 |Shift键+(1-7)|Shift+1|Shift+2|Shift+3|Shift+4|Shift+5|Shift+6|Shift+7|
 |低音|C3|D3|E3|F3|G3|A3|B3|
 |Ctrl键+(1-7)|Ctrl+1|Ctrl+2|Ctrl+3|Ctrl+4|Ctrl+5|Ctrl+6|Ctrl+7|
@@ -134,9 +133,8 @@ export default {
 
 上面是全音表，这里附上半音表：
 
-|||||||
-|-|-|-|-|-|-|
 |倍低半音|C#2|D#2|F#2|G#2|A#2|
+|-|-|-|-|-|-|
 |Shift+|Shift+q|Shift+w|Shift+e|Shift+r|Shift+t|
 |低半音|C#3|D#3|F#3|G#3|A#3|
 |Ctrl+|Ctrl+q|Ctrl+w|Ctrl+e|Ctrl+r|Ctrl+t|
