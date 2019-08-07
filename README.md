@@ -102,9 +102,9 @@ npm run build
 
 |app-piano.eno|开发中你需要编写的单文件组件|
 |-|-|
-|app-piano.js|经过`Eno-Snippets`修改或者保存文件`Hello.eno`后经过插件转化的js文件|
+|app-piano.js|经过`Eno-Snippets`修改或者保存文件`Hello.eno`后经过插件转化的`js`文件|
 
-如下图，左边的代码是我们编写的 .eno 后缀的单文件组件，右边是经过 Eno Snippets 生成的 .js 后缀文件。
+如下图，左边的代码是我们编写的 `.eno` 后缀的单文件组件，右边是经过 `Eno Snippets` 生成的 `.js` 后缀文件。
 
 <img src="https://wscats.github.io/omi-docs/public/images/transfer.png" />
 
@@ -524,6 +524,41 @@ playSong(song) {
 '1', '1', '1', '2', '3', '2', 'Ctrl+5', '1', '3', '5', '1', 'Ctrl+7', '3', '5', '5', '6', '7', 'Option+1', '6', '5', '3', '2', '1', '1', '1', '3', '2', '1', '1', '1',
 
 '2', '3', '2', 'Ctrl+6', 'Ctrl+7', '1', '2', '1'
+```
+
+# 音符同步显示
+
+<img src="./public/demo.gif" />
+
+每自动按一个钢琴键，可以看到音符在下面跳动并自动高亮，这里面涉及钢琴组件和底部文字组件的通信。我们使用的是 Omi 自带的 Store 功能来实现组件的通信，本质上它是基于 Proxy 对数据进行劫持，当我们改变一个数据的时候，可以实时映射最新的状态到另外一个组件，从而完成组件的通信，这里我设置了一个 `count` 和 `song` 作为两个组件的通信值，`count` 记录的是点击到了第几个音符，而 `song` 是正在播放的钢琴曲谱。
+
+```js
+render(<my-app />, '#root', {
+    data: {
+        count: 0,
+        song: []
+    },
+    sub() {
+        this.data.count--
+    },
+    add() {
+        this.data.count++
+    },
+    setSong(song) {
+        // 构建新的数组，给它下标值来做索引
+        let melody = [];
+        song.map((item, index) => {
+            melody.push({
+                ...item,
+                index
+            })
+        })
+        // 处理成每30个音符一个数组，自动播放时候自动显示按键
+        for (let j = 0; j < melody.length; j += 30) {
+            this.data.song.push(melody.slice(j, j + 30))
+        }
+    }
+})
 ```
 
 # Contributing 
