@@ -113,7 +113,7 @@ npm run build
 
 # 简单乐理知识
 
-首先我们先补习点音乐基础，提前收集好最基本的[钢琴单音素材](https://github.com/Wscats/piano/tree/master/public/samples/piano)，每个音符对应一份`.mp3`文件，用一个对象记录起来，类似下面这样，举个例子这里的`A`指的是`CDEFGAB`音名中`A`也就是`Sol`，这是最基本的乐理，有没有让你想起小时候上音乐课，画板上的五线谱。
+首先我们先补习点音乐基础，提前收集好最基本的[钢琴单音素材](https://github.com/Wscats/piano/tree/master/public/samples/piano)，每个音符对应一份`.mp3`文件，用一个对象记录起来，类似下面这样，举个例子这里的`A`指的是`CDEFGAB`音名中`A`也就是`La`，这是最基本的乐理，有没有让你想起小时候上音乐课，画板上的五线谱。
 
 ```js
 export default {
