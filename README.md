@@ -84,6 +84,33 @@ npm start
 npm run build
 ```
 
+# 技术点和目录结构
+
+项目中没有使用市面主流的框架（React，Vue 和 Angular ）和热门的技术，而用的是Omi框架（`JSX+WebComponents`），还有 `Omil` 的单文件组件 `SFCs` 加载器，组件通讯基于`Proxy`特性，并结合了 VScode 的插件 `Eno-Snippets`基于`AST`和`正则`实时编译`.eno或.omi` 后缀组件减轻部分的 `Webpack` 的局部编译压力，当然其他同学们熟知的技术这里就不提及了。
+
+- src
+  - assets
+  - element
+    - app-piano
+      - songs 钢琴简谱目录
+      - app-piano.eno 单文件组件
+      - app-piano.js 组件编译后的JS文件
+      - notes.js 键盘按键和音符的映射
+  - index.js 组件根容器，配置`Proxy`的通信方法
+- public
+  - samples/piano 钢琴单音符素材
+
+|app-piano.eno|开发中你需要编写的单文件组件|
+|-|-|
+|app-piano.js|经过`Eno-Snippets`修改或者保存文件`Hello.eno`后经过插件转化的js文件|
+
+如下图，左边的代码是我们编写的 .eno 后缀的单文件组件，右边是经过 Eno Snippets 生成的 .js 后缀文件。
+
+<img src="https://wscats.github.io/omi-docs/public/images/transfer.png" />
+
+
+
+
 # 简单乐理知识
 
 首先我们先补习点音乐基础，提前收集好最基本的[钢琴单音素材](https://github.com/Wscats/piano/tree/master/public/samples/piano)，每个音符对应一份`.mp3`文件，用一个对象记录起来，类似下面这样，举个例子这里的`A`指的是`CDEFGAB`音名中`A`也就是`Sol`，这是最基本的乐理，有没有让你想起小时候上音乐课，画板上的五线谱。
