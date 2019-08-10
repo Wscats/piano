@@ -1,5 +1,4 @@
 <div align="center">
-<!-- <p><img width="150" src="./public/logo.png"></p> -->
 
 <h1>Omi Piano</h1>
 
@@ -8,12 +7,6 @@
   <strong>Build piano with Omi and Omi Snippets</strong>
   <br /><br />
   <strong>基于Omi和Omi Snippets构建钢琴应用</strong>
-  <!-- 
-  ,
-  <a href="https://github.com/Wscats/omi-electron/releases/tag/1.3">Download Win Version Zip</a>
-  or
-  <a href="https://github.com/Wscats/omi-electron/releases/tag/1.2">Download Mac Version Zip</a> 
-  -->
 </p>
 
 
@@ -23,14 +16,22 @@
   </sub>
 </p>
 
-<p>
+<!-- <p>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/issues/Wscats/piano" alt="NPM version"></a>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/forks/Wscats/piano" alt="MIT License"></a>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/stars/Wscats/piano" alt="Linux Build"></a>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/license/Wscats/piano" alt="Window Build"/></a>
+</p> -->
+
+<p>
+<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Star-456+-orange" /></a>
+<a href="https://wscats.github.io/piano/build/"><img src="https://img.shields.io/badge/Macketplace-v2.00-brightgreen" /></a>
+<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Github Page-Wscats-yellow" /></a>
+<a href="https://github.com/Wscats"><img src="https://img.shields.io/badge/Author-Eno Yao-blueviolet" /></a>
 </p>
 
 </div>
+
 
 
 # Usage
@@ -41,7 +42,9 @@
 
 > 项目地址： https://github.com/Wscats/piano
 
-<img height="80px" align="right" src="https://raw.githubusercontent.com/Wscats/piano/master/public/demo.png" />
+<img width="200px" align="right" src="./public/piano.gif"/>
+
+<!-- <img height="80px" align="right" src="https://raw.githubusercontent.com/Wscats/piano/master/public/demo.png" /> -->
 
 用键盘8个键演奏一首蒲公英的约定送给996的自己或者一首月亮代表我的心给七夕的她，非常简单~
 
@@ -142,7 +145,7 @@ export default {
 |音名|C4|D4|E4|F4|G4|A4|B4|
 |音符|Do|Re|Mi|Fa|Sol|La|Si|
 
-这里专门制作一张图方便我们理解：
+这里专门制作一张图方便我们理解，请看右图：
 
 <img height="120px" align="right"  src="./public/keys.png" />
 
