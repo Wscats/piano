@@ -94,6 +94,8 @@ npm run build
 
 项目中没有使用市面主流的框架（React，Vue 和 Angular ）和热门的技术，而用的是Omi框架（`JSX+WebComponents`），还有 `Omil` 的单文件组件 `SFCs` 加载器，组件通讯基于`Proxy`特性，并结合了 VScode 的插件 `Eno-Snippets`基于`AST`和`正则`实时编译`.eno或.omi` 后缀组件减轻部分的 `Webpack` 的局部编译压力，当然其他同学们熟知的技术这里就不提及了。
 
+<img width="550px" align="right" src="https://wscats.github.io/omi-docs/public/images/transfer.png" />
+
 - src
   - assets
   - element
@@ -110,9 +112,9 @@ npm run build
 |-|-|
 |app-piano.js|经过`Eno-Snippets`修改或者保存文件`Hello.eno`后经过插件转化的`js`文件|
 
-如下图，左边的代码是我们编写的 `.eno` 后缀的单文件组件，右边是经过 `Eno Snippets` 生成的 `.js` 后缀文件。
+如右图，左边的代码是我们编写的 `.eno` 后缀的单文件组件，右边是经过 `Eno Snippets` 生成的 `.js` 后缀文件。
 
-<img src="https://wscats.github.io/omi-docs/public/images/transfer.png" />
+
 
 
 
