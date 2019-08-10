@@ -42,7 +42,7 @@
 
 > 项目地址： https://github.com/Wscats/piano
 
-<img width="200px" align="right" src="./public/piano.gif"/>
+<img width="250px" align="right" src="./public/piano.gif"/>
 
 <!-- <img height="80px" align="right" src="https://raw.githubusercontent.com/Wscats/piano/master/public/demo.png" /> -->
 
@@ -183,6 +183,8 @@ export default {
 # 构建钢琴界面
 
 有上面的前期准备，下面就是转化为我们的编程知识了，我们需要使用 HTML 来绘制我们的钢琴界面，我们可以参考 [codepen](https://codepen.io/search/pens?q=piano&page=1&order=popularity&depth=everything) 和 [codesandbox](https://codesandbox.io/search?query=piano&page=1&configure%5BhitsPerPage%5D=12) 的素材，这里我用了 `flex` 布局配合阴影和过度实现钢琴的黑白键，里面用了 React 的 JSX 语法去遍历渲染黑白键。
+
+<img src="https://raw.githubusercontent.com/Wscats/piano/master/public/demo.png" />
 
 ```html
 <div class="piano">
