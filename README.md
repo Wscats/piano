@@ -32,11 +32,14 @@
 
 </div>
 
-<img src="https://raw.githubusercontent.com/Wscats/piano/master/public/demo.png" />
+
 
 # Usage
 
-> 体验地址： https://wscats.github.io/piano/build/
+<img height="150px" align="right" src="https://raw.githubusercontent.com/Wscats/piano/master/public/demo.png" />
+
+> 体验地址： https://wscats.github.io/piano/build/ 
+
 
 > 项目地址： https://github.com/Wscats/piano
 
@@ -134,6 +137,8 @@ export default {
 
 > `1 === C4 === Do`
 
+<img height="150px" align="right"  src="./public/keys.png" />
+
 |数字键|1|2|3|4|5|6|7|
 |-|-|-|-|-|-|-|-|
 |音名|C4|D4|E4|F4|G4|A4|B4|
@@ -141,7 +146,7 @@ export default {
 
 这里专门制作一张图方便我们理解：
 
-<img src="./public/keys.png" />
+
 
 当然实际情况还有全音和半音的区分，比如`A`的半音就是`A#`，还有中音，高音和倍高音，我们这里用`A4`表示中音，`A5`表示高音，`A6`表示倍高音，所以表格可以继续整理得更清晰，当我们要弹奏中音`A4`，只需要按键盘上的数字键`6`，如果要弹奏高音`A5`，只需要用组合键`Option+6`，我们只需要举一反三，就可以知道每个音符对应的键盘按键。
 
@@ -261,6 +266,7 @@ export default {
 <audio preload="auto" src={this.data.notes[item.white.name]} hidden='true' data-note={item.white.name} class='audioEle'></audio>
 ```
 播放只要用`ref`属性获取琴音的节点，然后对其触发方法控制播放逻辑，`audio.currentTime = 0`重置播放进度和`audio.play()`执行播放，当触发播放的同时可以用延时器实现按键动画。
+
 ```js
 playNote(name) {
   let audio = this[name].childNodes[1]
@@ -273,11 +279,14 @@ playNote(name) {
   audio.play();
 }
 ```
+
+<img align="right" width="500" src="./public/keycode.png" />
+
 完成 `<audio>` 的音频处理之后，就需要让键盘事件与其绑定逻辑了，这里需要了解键盘的 `keycode`，键盘每个实体按键都会对应有一个按键码，根据按键码用 `JS` 键盘事件监听来判断按键是否被摁住。
 
-<img src="./public/keycode.png" />
 
 我们使用 `window.document.onkeydown` 来监听页面全局的键盘事件，然后判断事件对象 `e.altKey`，`e.ctrlKey`，`e.metaKey` 和 `e.shiftKey` 这四个功能键是否被触发，再判断数字键是否被触发，最后判断字母键是否被触发。
+
 ```js
 document.onkeydown = (event) => {
   var e = event || window.event || arguments.callee.caller.arguments[0];
