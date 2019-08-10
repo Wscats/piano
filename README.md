@@ -24,25 +24,24 @@
 </p>
 
 <p>
-<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/Angular-news/news/image/npm.svg" alt="NPM version"></a>
-<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/Angular-news/news/image/mit.svg" alt="MIT License"></a>
-<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/Angular-news/news/image/linux.svg" alt="Linux Build"></a>
-<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/Angular-news/news/image/windows.svg" alt="Window Build"/></a>
+<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/issues/Wscats/piano" alt="NPM version"></a>
+<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/forks/Wscats/piano" alt="MIT License"></a>
+<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/stars/Wscats/piano" alt="Linux Build"></a>
+<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/license/Wscats/piano" alt="Window Build"/></a>
 </p>
 
 </div>
 
 
-
 # Usage
 
-<img height="150px" align="right" src="https://raw.githubusercontent.com/Wscats/piano/master/public/demo.png" />
 
 > 体验地址： https://wscats.github.io/piano/build/ 
 
 
 > 项目地址： https://github.com/Wscats/piano
 
+<img height="80px" align="right" src="https://raw.githubusercontent.com/Wscats/piano/master/public/demo.png" />
 
 用键盘8个键演奏一首蒲公英的约定送给996的自己或者一首月亮代表我的心给七夕的她，非常简单~
 
@@ -137,7 +136,7 @@ export default {
 
 > `1 === C4 === Do`
 
-<img height="150px" align="right"  src="./public/keys.png" />
+<img height="120px" align="right"  src="./public/keys.png" />
 
 |数字键|1|2|3|4|5|6|7|
 |-|-|-|-|-|-|-|-|
@@ -580,4 +579,5 @@ playSong(song) {
 
 # License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+Omi Piano is released under the 
+[MIT](http://opensource.org/licenses/MIT)
