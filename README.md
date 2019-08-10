@@ -25,7 +25,7 @@
 
 <p>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Star-456+-orange" /></a>
-<a href="https://wscats.github.io/piano/build/"><img src="https://img.shields.io/badge/Macketplace-v2.00-brightgreen" /></a>
+<a href="https://wscats.github.io/piano/build/"><img src="https://img.shields.io/badge/Version-2.00-brightgreen" /></a>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Github Page-Wscats-yellow" /></a>
 <a href="https://github.com/Wscats"><img src="https://img.shields.io/badge/Author-Eno Yao-blueviolet" /></a>
 </p>
