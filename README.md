@@ -94,7 +94,7 @@ npm run build
 
 项目中没有使用市面主流的框架（React，Vue 和 Angular ）和热门的技术，而用的是Omi框架（`JSX+WebComponents`），还有 `Omil` 的单文件组件 `SFCs` 加载器，组件通讯基于`Proxy`特性，并结合了 VScode 的插件 `Eno-Snippets`基于`AST`和`正则`实时编译`.eno或.omi` 后缀组件减轻部分的 `Webpack` 的局部编译压力，当然其他同学们熟知的技术这里就不提及了。
 
-<img width="550px" align="right" src="https://wscats.github.io/omi-docs/public/images/transfer.png" />
+<img width="560px" align="right" src="https://wscats.github.io/omi-docs/public/images/transfer.png" />
 
 - src
   - assets
@@ -113,10 +113,6 @@ npm run build
 |app-piano.js|经过`Eno-Snippets`修改或者保存文件`Hello.eno`后经过插件转化的`js`文件|
 
 如右图，左边的代码是我们编写的 `.eno` 后缀的单文件组件，右边是经过 `Eno Snippets` 生成的 `.js` 后缀文件。
-
-
-
-
 
 
 # 简单乐理知识
@@ -148,9 +144,9 @@ export default {
 |音名|C4|D4|E4|F4|G4|A4|B4|
 |音符|Do|Re|Mi|Fa|Sol|La|Si|
 
-这里专门制作一张图方便我们理解，请看右图：
-
 <img height="120px" align="right"  src="./public/keys.png" />
+
+这里专门制作一张图方便我们理解，请看右图：
 
 当然实际情况还有全音和半音的区分，比如`A`的半音就是`A#`，还有中音，高音和倍高音，我们这里用`A4`表示中音，`A5`表示高音，`A6`表示倍高音，所以表格可以继续整理得更清晰，当我们要弹奏中音`A4`，只需要按键盘上的数字键`6`，如果要弹奏高音`A5`，只需要用组合键`Option+6`，我们只需要举一反三，就可以知道每个音符对应的键盘按键。
 
