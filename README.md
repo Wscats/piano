@@ -96,7 +96,7 @@ npm run build
 
 <!-- <img width="560px" align="right" src="https://wscats.github.io/omi-docs/public/images/transfer.png" /> -->
 
-<img width="600px" align="right" src="./public/transfer.png" />
+<img width="580px" align="right" src="./public/transfer.png" />
 
 - src
   - assets
