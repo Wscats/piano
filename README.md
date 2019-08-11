@@ -16,25 +16,21 @@
   </sub>
 </p>
 
-<!-- <p>
-<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/issues/Wscats/piano" alt="NPM version"></a>
-<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/forks/Wscats/piano" alt="MIT License"></a>
-<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/stars/Wscats/piano" alt="Linux Build"></a>
-<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/github/license/Wscats/piano" alt="Window Build"/></a>
-</p> -->
-
 <p>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Star-456+-orange" /></a>
 <a href="https://wscats.github.io/piano/build/"><img src="https://img.shields.io/badge/Version-5.20-brightgreen" /></a>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Github Page-Wscats-yellow" /></a>
 <a href="https://github.com/Wscats"><img src="https://img.shields.io/badge/Author-Eno Yao-blueviolet" /></a>
 </p>
-
 </div>
 
+<!-- <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Star-456+-orange" /></a>
+<a href="https://wscats.github.io/piano/build/"><img src="https://img.shields.io/badge/Version-5.20-brightgreen" /></a>
+<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Github Page-Wscats-yellow" /></a>
+<a href="https://github.com/Wscats"><img src="https://img.shields.io/badge/Author-Eno Yao-blueviolet" /></a>
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b652768b-1673-42cd-98dd-3fd807b2ebca/deploy-status)](https://app.netlify.com/sites/determined-goldstine-52a037/deploys) -->
 
-
-# Usage
+# Usage 
 
 <img width="250px" align="right" src="./public/piano.gif"/>
 
