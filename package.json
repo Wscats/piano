@@ -83,6 +83,7 @@
     "object-assign": "4.1.1",
     "omi": "latest",
     "omi-router": "latest",
+    "omil": "latest",
     "omio": "latest",
     "omiu": "latest",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
