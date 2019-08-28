@@ -17,14 +17,14 @@
 </p>
 
 <p>
-<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Star-456+-orange" /></a>
+<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Star-500+-orange" /></a>
 <a href="https://wscats.github.io/piano/build/"><img src="https://img.shields.io/badge/Version-5.20-brightgreen" /></a>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Github Page-Wscats-yellow" /></a>
 <a href="https://github.com/Wscats"><img src="https://img.shields.io/badge/Author-Eno Yao-blueviolet" /></a>
 </p>
 </div>
 
-<!-- <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Star-456+-orange" /></a>
+<!-- <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Star-500+-orange" /></a>
 <a href="https://wscats.github.io/piano/build/"><img src="https://img.shields.io/badge/Version-5.20-brightgreen" /></a>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Github Page-Wscats-yellow" /></a>
 <a href="https://github.com/Wscats"><img src="https://img.shields.io/badge/Author-Eno Yao-blueviolet" /></a>
@@ -571,7 +571,7 @@ playSong(song) {
 
 # Contributing 
 
-感谢音乐和编程的陪伴！也致敬各位奋斗于996的代码家，欢迎分享，也期待您贡献代码，提 PR ，在 [issue](https://github.com/Wscats/piano/issues/new) 中讨论问题，或者说说您的建议，正如 Leehom Wang 歌曲中唱到：
+感谢音乐和编程的陪伴！也致敬各位奋斗于996的代码家，欢迎分享，也期待您贡献代码，提 PR ，在 [issue](https://github.com/Wscats/piano/issues/new) 中讨论问题，或者说说您的建议，音乐不曾辜负任何人，正如 Leehom Wang 歌曲中唱到：
 
 > 如果世界太危险，只有音乐最安全，带着我进梦里面，让歌词都实现！  —— 《我们的歌》
 
