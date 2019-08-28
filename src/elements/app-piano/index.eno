@@ -7,7 +7,7 @@
           onClick={this.playNote.bind(this,item.white.name)} data-key={item.white.keyCode}
           data-note={item.white.name}>
           <span class="piano-note">{item.white.name}</span>
-          <audio preload="auto" src={this.data.notes[item.white.name]} hidden='true' data-note={item.white.name}
+          <audio preload="auto" src={this.data.notes[item.white.name].url} hidden='true' data-note={item.white.name}
             class='audioEle'></audio>
         </div>
         <div data-type="black" ref={e=>{ this[item.black.name] = e }} style={{
@@ -15,19 +15,12 @@
         }} class="piano-key__black" onClick={this.playNote.bind(this,item.black.name)} data-key={item.black.keyCode}
           data-note={item.black.name}>
           <span class="piano-note" style="color:#fff">{item.black.name}</span>
-          <audio preload="auto" src={this.data.notes[item.white.name]} hidden='true' data-note={item.white.name}
+          <audio preload="auto" src={this.data.notes[item.white.name].url} hidden='true' data-note={item.white.name}
             class='audioEle'></audio>
         </div>
       </div>
       )})}
     </div>
-    {/*<a href="https://github.com/Wscats/piano">
-      <img class="icon" src="https://github.githubassets.com/images/icons/emoji/unicode/263a.png" alt="☺" />
-      点击查看项目地址
-    </a>*/}
-    {/*<o-button onClick={this.playSong.bind(this,moon)} style='margin-top:20px; width:280px;'>点击弹奏：月亮代表我的心</o-button>
-    <o-button onClick={this.playSong.bind(this,pgydyd)} style='margin-top:20px; width:280px;'>点击弹奏：蒲公英的约定</o-button>
-    <o-button onClick={this.playSong.bind(this,fuji)} style='margin-top:20px; width:280px;'>点击弹奏：富士山下&爱情转移</o-button>*/}
     <div class="text-center">
       <p>Click the button below to let the piano play the song automatically:</p>
       <p>点击下面按钮让钢琴自动演奏歌曲:</p>
@@ -43,20 +36,21 @@
         )}
       </div>
     </div>
-    <!-- <o-button onClick={this.playSong.bind(this,later)} style='margin-top:20px; width:280px;'>点击弹奏：后来</o-button> -->
   </div>
 </template>
 <script>
+  // 音符文件
   import notes from './notes.js'
   // 演示：月亮代表我的心
   import moon from './songs/moon.js'
   // 演示：富士山下
   import fuji from './songs/fuji.js'
-  // 后来
+  // 演示：后来
   import later from './songs/later.js'
   // 蒲公英的约定
   import pgydyd from './songs/pgydyd.js'
-  import 'omiu/button'
+  // 音符和键盘的映射关系表
+  import pianoKeys from './pianoKeys.js'
   export default class {
     static use = [
       { count: 'count', song: 'song' }
@@ -67,81 +61,12 @@
     install() {
       this.data = {
         // 琴音，所有音符的播放地址
-        notes: notes,
-        pianoKeys: []
+        notes,
+        pianoKeys
       }
-      // 存放钢琴的按键顺序
-      let pianoKeys = [];
-      [2, 3, 4, 5, 6].map((item) => {
-        pianoKeys = pianoKeys.concat([{
-          white: {
-            name: `C${item}`,
-            keyCode: 49
-          },
-          black: {
-            name: `C#${item}`,
-            keyCode: 81
-          }
-        }, {
-          white: {
-            name: `D${item}`,
-            keyCode: 50
-          },
-          black: {
-            name: `D#${item}`,
-            keyCode: 87
-          }
-        }, {
-          white: {
-            name: `E${item}`,
-            keyCode: 51
-          },
-          black: {
-            name: null,
-            keyCode: null
-          }
-        }, {
-          white: {
-            name: `F${item}`,
-            keyCode: 52
-          },
-          black: {
-            name: `F#${item}`,
-            keyCode: 69
-          }
-        }, {
-          white: {
-            name: `G${item}`,
-            keyCode: 53
-          },
-          black: {
-            name: `G#${item}`,
-            keyCode: 82
-          }
-        }, {
-          white: {
-            name: `A${item}`,
-            keyCode: 54
-          },
-          black: {
-            name: `A#${item}`,
-            keyCode: 84
-          }
-        }, {
-          white: {
-            name: `B${item}`,
-            keyCode: 55
-          },
-          black: {
-            name: null,
-            keyCode: null
-          }
-        }])
-      })
-      this.data.pianoKeys = pianoKeys;
-      this.data.notes = notes;
+
       document.onkeydown = (event) => {
-        console.log(event)
+        // console.log(event)
         var e = event || window.event || arguments.callee.caller.arguments[0];
         let playNote = (key) => {
           if (e.shiftKey === true) {
@@ -158,6 +83,9 @@
           }
         }
         if (e && 49 <= e.keyCode && e.keyCode <= 55) {
+          // console.log({
+          //   ...this
+          // })
           switch (e.keyCode) {
             case 49:
               playNote('C')
@@ -201,7 +129,7 @@
               break;
           }
         }
-      };
+      }
       // 进入页面后5秒后自动播放
       // this.timer = setTimeout(() => {
       //   this.playSong(moon)
@@ -215,16 +143,26 @@
       console.log('reset')
     }
     playNote(name) {
-      let audio = this[name].childNodes[1]
-      this[name].style.background = `linear-gradient(-20deg, #3330fb, #000, #222)`
-      let timer = setTimeout(() => {
-        // console.log(this[name].getAttribute('data-type'))
-        this[name].getAttribute('data-type') === 'white' ? this[name].style.background = `linear-gradient(-30deg, #f8f8f8, #fff)` : this[name].style.background = `linear-gradient(-20deg, #222, #000, #222)`
-        // clearInterval(timer)
-        clearTimeout(timer)
-      }, 1000)
-      audio.currentTime = 0;
-      audio.play();
+      console.log(this.data.notes[name])
+      if (!this.data.notes[name]["isPlay"]) {
+        // console.log(name)
+        let audio = this[name].childNodes[1]
+        this[name].style.background = `linear-gradient(-20deg, #3330fb, #000, #222)`
+        let timer = setTimeout(() => {
+          // console.log(this[name].getAttribute('data-type'))
+          this[name].getAttribute('data-type') === 'white' ? this[name].style.background = `linear-gradient(-30deg, #f8f8f8, #fff)` : this[name].style.background = `linear-gradient(-20deg, #222, #000, #222)`
+          // clearInterval(timer)
+          clearTimeout(timer)
+        }, 1000)
+        audio.currentTime = 0
+        audio.play()
+        // 设置对应的音符为正在播放，相当于节流的开关
+        this.data.notes[name]["isPlay"] = true
+        let isPlay = setTimeout(() => {
+          this.data.notes[name]["isPlay"] = false
+          clearTimeout(isPlay)
+        }, 1000)
+      }
     }
     // 使用递归弹奏 具有时间效果
     playSong(song) {
@@ -500,6 +438,18 @@
     }
     // 录音
     recordSong() { }
+    // 节流，防止长按音符键
+    debounce(func, wait = 1000) {
+      let lastTime = null;// 为了避免每次调用lastTime都被清空，利用js的闭包返回一个function;此外声明为全局变量也可以
+      return function () {
+        let now = new Date();
+        // 如果上次执行的时间和这次触发的时间大于一个执行周期，则执行
+        if (now - lastTime - wait > 0) {
+          func();
+          lastTime = now;
+        }
+      }
+    }
   }
 </script>
 <style>

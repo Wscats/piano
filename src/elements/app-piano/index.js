@@ -4,7 +4,7 @@ import moon from "./songs/moon.js";
 import fuji from "./songs/fuji.js";
 import later from "./songs/later.js";
 import pgydyd from "./songs/pgydyd.js";
-import "omiu/button";
+import pianoKeys from "./pianoKeys.js";
 
 class AppPiano extends WeElement {
   constructor(...args) {
@@ -55,7 +55,7 @@ class AppPiano extends WeElement {
               ),
               h("audio", {
                 preload: "auto",
-                src: this.data.notes[item.white.name],
+                src: this.data.notes[item.white.name].url,
                 hidden: "true",
                 "data-note": item.white.name,
                 class: "audioEle"
@@ -86,7 +86,7 @@ class AppPiano extends WeElement {
               ),
               h("audio", {
                 preload: "auto",
-                src: this.data.notes[item.white.name],
+                src: this.data.notes[item.white.name].url,
                 hidden: "true",
                 "data-note": item.white.name,
                 class: "audioEle"
@@ -157,89 +157,11 @@ class AppPiano extends WeElement {
 
   install() {
     this.data = {
-      notes: notes,
-      pianoKeys: []
+      notes,
+      pianoKeys
     };
-    let pianoKeys = [];
-    [2, 3, 4, 5, 6].map(item => {
-      pianoKeys = pianoKeys.concat([
-        {
-          white: {
-            name: `C${item}`,
-            keyCode: 49
-          },
-          black: {
-            name: `C#${item}`,
-            keyCode: 81
-          }
-        },
-        {
-          white: {
-            name: `D${item}`,
-            keyCode: 50
-          },
-          black: {
-            name: `D#${item}`,
-            keyCode: 87
-          }
-        },
-        {
-          white: {
-            name: `E${item}`,
-            keyCode: 51
-          },
-          black: {
-            name: null,
-            keyCode: null
-          }
-        },
-        {
-          white: {
-            name: `F${item}`,
-            keyCode: 52
-          },
-          black: {
-            name: `F#${item}`,
-            keyCode: 69
-          }
-        },
-        {
-          white: {
-            name: `G${item}`,
-            keyCode: 53
-          },
-          black: {
-            name: `G#${item}`,
-            keyCode: 82
-          }
-        },
-        {
-          white: {
-            name: `A${item}`,
-            keyCode: 54
-          },
-          black: {
-            name: `A#${item}`,
-            keyCode: 84
-          }
-        },
-        {
-          white: {
-            name: `B${item}`,
-            keyCode: 55
-          },
-          black: {
-            name: null,
-            keyCode: null
-          }
-        }
-      ]);
-    });
-    this.data.pianoKeys = pianoKeys;
-    this.data.notes = notes;
 
     document.onkeydown = event => {
-      console.log(event);
       var e = event || window.event || arguments.callee.caller.arguments[0];
 
       let playNote = key => {
@@ -330,22 +252,31 @@ class AppPiano extends WeElement {
   }
 
   playNote(name) {
-    let audio = this[name].childNodes[1];
-    this[
-      name
-    ].style.background = `linear-gradient(-20deg, #3330fb, #000, #222)`;
-    let timer = setTimeout(() => {
-      this[name].getAttribute("data-type") === "white"
-        ? (this[
-            name
-          ].style.background = `linear-gradient(-30deg, #f8f8f8, #fff)`)
-        : (this[
-            name
-          ].style.background = `linear-gradient(-20deg, #222, #000, #222)`);
-      clearTimeout(timer);
-    }, 1000);
-    audio.currentTime = 0;
-    audio.play();
+    console.log(this.data.notes[name]);
+
+    if (!this.data.notes[name]["isPlay"]) {
+      let audio = this[name].childNodes[1];
+      this[
+        name
+      ].style.background = `linear-gradient(-20deg, #3330fb, #000, #222)`;
+      let timer = setTimeout(() => {
+        this[name].getAttribute("data-type") === "white"
+          ? (this[
+              name
+            ].style.background = `linear-gradient(-30deg, #f8f8f8, #fff)`)
+          : (this[
+              name
+            ].style.background = `linear-gradient(-20deg, #222, #000, #222)`);
+        clearTimeout(timer);
+      }, 1000);
+      audio.currentTime = 0;
+      audio.play();
+      this.data.notes[name]["isPlay"] = true;
+      let isPlay = setTimeout(() => {
+        this.data.notes[name]["isPlay"] = false;
+        clearTimeout(isPlay);
+      }, 1000);
+    }
   }
 
   playSong(song) {
@@ -651,6 +582,18 @@ class AppPiano extends WeElement {
   }
 
   recordSong() {}
+
+  debounce(func, wait = 1000) {
+    let lastTime = null;
+    return function() {
+      let now = new Date();
+
+      if (now - lastTime - wait > 0) {
+        func();
+        lastTime = now;
+      }
+    };
+  }
 }
 
 AppPiano.css = `
