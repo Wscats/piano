@@ -275,7 +275,7 @@ class AppPiano extends WeElement {
       let isPlay = setTimeout(() => {
         this.data.notes[name]["isPlay"] = false;
         clearTimeout(isPlay);
-      }, 1000);
+      }, 500);
     }
   }
 
@@ -582,18 +582,6 @@ class AppPiano extends WeElement {
   }
 
   recordSong() {}
-
-  debounce(func, wait = 1000) {
-    let lastTime = null;
-    return function() {
-      let now = new Date();
-
-      if (now - lastTime - wait > 0) {
-        func();
-        lastTime = now;
-      }
-    };
-  }
 }
 
 AppPiano.css = `
