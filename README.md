@@ -17,7 +17,7 @@
 </p>
 
 <p>
-<a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Star-500+-orange" /></a>
+<a href="https://github.com/Wscats/piano"><a href="https://opencollective.com/piano" alt="Financial Contributors on Open Collective"><img src="https://opencollective.com/piano/all/badge.svg?label=financial+contributors" /></a> <img src="https://img.shields.io/badge/Star-500+-orange" /></a>
 <a href="https://wscats.github.io/piano/build/"><img src="https://img.shields.io/badge/Version-5.20-brightgreen" /></a>
 <a href="https://github.com/Wscats/piano"><img src="https://img.shields.io/badge/Github Page-Wscats-yellow" /></a>
 <a href="https://github.com/Wscats"><img src="https://img.shields.io/badge/Author-Eno Yao-blueviolet" /></a>
@@ -576,6 +576,36 @@ playSong(song) {
 > 如果世界太危险，只有音乐最安全，带着我进梦里面，让歌词都实现！  —— 《我们的歌》
 
 
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/Wscats/piano/graphs/contributors"><img src="https://opencollective.com/piano/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/piano/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/piano"><img src="https://opencollective.com/piano/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/piano/contribute)]
+
+<a href="https://opencollective.com/piano/organization/0/website"><img src="https://opencollective.com/piano/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/piano/organization/1/website"><img src="https://opencollective.com/piano/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/piano/organization/2/website"><img src="https://opencollective.com/piano/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/piano/organization/3/website"><img src="https://opencollective.com/piano/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/piano/organization/4/website"><img src="https://opencollective.com/piano/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/piano/organization/5/website"><img src="https://opencollective.com/piano/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/piano/organization/6/website"><img src="https://opencollective.com/piano/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/piano/organization/7/website"><img src="https://opencollective.com/piano/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/piano/organization/8/website"><img src="https://opencollective.com/piano/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/piano/organization/9/website"><img src="https://opencollective.com/piano/organization/9/avatar.svg"></a>
 
 # License
 

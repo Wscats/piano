@@ -86,6 +86,7 @@
     "omil": "latest",
     "omio": "latest",
     "omiu": "latest",
+    "opencollective-postinstall": "^2.0.2",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
@@ -111,7 +112,8 @@
     "start": "node scripts/start.js",
     "build": "PUBLIC_URL=. node scripts/build.js",
     "build-windows": "set PUBLIC_URL=.&& node scripts/build.js",
-    "fix": "eslint src --fix"
+    "fix": "eslint src --fix",
+    "postinstall": "opencollective-postinstall || true"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -179,5 +181,9 @@
   },
   "alias": {
     "omi": "omio"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/piano"
   }
 }
