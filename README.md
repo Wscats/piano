@@ -87,7 +87,7 @@ npm run build
 
 # 技术点和目录结构
 
-项目中没有使用市面主流的框架（React，Vue 和 Angular ）和热门的技术，而用的是Omi框架（`JSX+WebComponents`），还有 `Omil` 的单文件组件 `SFCs` 加载器，组件通讯基于`Proxy`特性，并结合了 VScode 的插件 `Eno-Snippets`基于`AST`和`正则`实时编译`.eno或.omi` 后缀组件减轻部分的 `Webpack` 的局部编译压力，当然其他同学们熟知的技术这里就不提及了。
+项目中没有使用市面主流的框架（React，Vue 和 Angular ）和热门的技术，而用的是 Omi 框架（`JSX+WebComponents`），还有 `Omil` 的单文件组件 `SFCs` 加载器，组件通讯基于`Proxy`特性，并结合了 VScode 的插件 `Eno-Snippets`基于`AST`和`正则`实时编译`.eno或.omi` 后缀组件减轻部分的 `Webpack` 的局部编译压力，当然其他同学们熟知的技术这里就不提及了。
 
 <!-- <img width="560px" align="right" src="https://wscats.github.io/omi-docs/public/images/transfer.png" /> -->
 
@@ -581,12 +581,12 @@ playSong(song) {
 
 ### Code Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+This project exists thanks to all the people who contribute.
 <a href="https://github.com/Wscats/piano/graphs/contributors"><img src="https://opencollective.com/piano/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors
 
-Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/piano/contribute)]
+Become a financial contributor and help us sustain our community.
 
 #### Individuals
 
@@ -594,7 +594,7 @@ Become a financial contributor and help us sustain our community. [[Contribute](
 
 #### Organizations
 
-Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/piano/contribute)]
+Support this project with your organization. Your logo will show up here with a link to your website.
 
 <a href="https://opencollective.com/piano/organization/0/website"><img src="https://opencollective.com/piano/organization/0/avatar.svg"></a>
 <a href="https://opencollective.com/piano/organization/1/website"><img src="https://opencollective.com/piano/organization/1/avatar.svg"></a>
