@@ -575,10 +575,6 @@ playSong(song) {
 
 > 如果世界太危险，只有音乐最安全，带着我进梦里面，让歌词都实现！  —— 《我们的歌》
 
-
-
-## Contributors
-
 ### Code Contributors
 
 This project exists thanks to all the people who contribute.
