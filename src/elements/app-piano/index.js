@@ -4,6 +4,7 @@ import moon from "./songs/moon.js";
 import fuji from "./songs/fuji.js";
 import later from "./songs/later.js";
 import pgydyd from "./songs/pgydyd.js";
+import xxy from "./songs/xxy.js";
 import pianoKeys from "./pianoKeys.js";
 
 class AppPiano extends WeElement {
@@ -140,6 +141,14 @@ class AppPiano extends WeElement {
                     class: "btn btn-outline-info"
                   },
                   "\u84B2\u516C\u82F1\u7684\u7EA6\u5B9A"
+                ),
+                h(
+                  "button",
+                  {
+                    onClick: this.playSong.bind(this, xxy),
+                    class: "btn btn-outline-info"
+                  },
+                  "\u5C0F\u5E78\u8FD0"
                 ),
                 h(
                   "button",

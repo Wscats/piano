@@ -21,6 +21,7 @@
       </div>
       )})}
     </div>
+
     <div class="text-center">
       <p>Click the button below to let the piano play the song automatically:</p>
       <p>点击下面按钮让钢琴自动演奏歌曲:</p>
@@ -31,6 +32,7 @@
         <div>
           <button onClick={this.playSong.bind(this,moon)} class="btn btn-outline-info">月亮代表我的心</button>
           <button onClick={this.playSong.bind(this,pgydyd)} class="btn btn-outline-info">蒲公英的约定</button>
+          <button onClick={this.playSong.bind(this,xxy)} class="btn btn-outline-info">小幸运</button>
           <button onClick={this.playSong.bind(this,fuji)} class="btn btn-outline-info">富士山下&爱情转移</button>
         </div>
         )}
@@ -49,6 +51,8 @@
   import later from './songs/later.js'
   // 蒲公英的约定
   import pgydyd from './songs/pgydyd.js'
+  // 小幸运
+  import xxy from './songs/xxy.js'
   // 音符和键盘的映射关系表
   import pianoKeys from './pianoKeys.js'
   export default class {
