@@ -2,9 +2,9 @@ import { WeElement, define, h } from "omi";
 import notes from "./notes.js";
 import moon from "./songs/moon.js";
 import fuji from "./songs/fuji.js";
-import later from "./songs/later.js";
 import pgydyd from "./songs/pgydyd.js";
 import xxy from "./songs/xxy.js";
+import hl from "./songs/hl.js";
 import pianoKeys from "./pianoKeys.js";
 
 class AppPiano extends WeElement {
@@ -22,145 +22,74 @@ class AppPiano extends WeElement {
     return h(
       "div",
       {
-        class: ""
+        class: "piano"
       },
-      h(
-        "div",
-        {
-          class: "piano"
-        },
-        this.data.pianoKeys.map(item => {
-          return h(
+      this.data.pianoKeys.map(item => {
+        return h(
+          "div",
+          {
+            class: "piano-key"
+          },
+          h(
             "div",
             {
-              class: "piano-key"
+              "data-type": "white",
+              ref: e => {
+                this[item.white.name] = e;
+              },
+              class: "piano-key__white",
+              onClick: this.playNote.bind(this, item.white.name),
+              "data-key": item.white.keyCode,
+              "data-note": item.white.name
             },
             h(
-              "div",
+              "span",
               {
-                "data-type": "white",
-                ref: e => {
-                  this[item.white.name] = e;
-                },
-                class: "piano-key__white",
-                onClick: this.playNote.bind(this, item.white.name),
-                "data-key": item.white.keyCode,
-                "data-note": item.white.name
+                class: "piano-note"
               },
-              h(
-                "span",
-                {
-                  class: "piano-note"
-                },
-                item.white.name
-              ),
-              h("audio", {
-                preload: "auto",
-                src: this.data.notes[item.white.name].url,
-                hidden: "true",
-                "data-note": item.white.name,
-                class: "audioEle"
-              })
+              item.white.name
             ),
-            h(
-              "div",
-              {
-                "data-type": "black",
-                ref: e => {
-                  this[item.black.name] = e;
-                },
-                style: {
-                  display: item.black.name ? "block" : "none"
-                },
-                class: "piano-key__black",
-                onClick: this.playNote.bind(this, item.black.name),
-                "data-key": item.black.keyCode,
-                "data-note": item.black.name
+            h("audio", {
+              preload: "auto",
+              src: this.data.notes[item.white.name].url,
+              hidden: "true",
+              "data-note": item.white.name,
+              class: "audioEle"
+            })
+          ),
+          h(
+            "div",
+            {
+              "data-type": "black",
+              ref: e => {
+                this[item.black.name] = e;
               },
-              h(
-                "span",
-                {
-                  class: "piano-note",
-                  style: "color:#fff"
-                },
-                item.black.name
-              ),
-              h("audio", {
-                preload: "auto",
-                src: this.data.notes[item.white.name].url,
-                hidden: "true",
-                "data-note": item.white.name,
-                class: "audioEle"
-              })
-            )
-          );
-        })
-      ),
-      h(
-        "div",
-        {
-          class: "text-center"
-        },
-        h(
-          "p",
-          null,
-          "Click the button below to let the piano play the song automatically:"
-        ),
-        h(
-          "p",
-          null,
-          "\u70B9\u51FB\u4E0B\u9762\u6309\u94AE\u8BA9\u94A2\u7434\u81EA\u52A8\u6F14\u594F\u6B4C\u66F2:"
-        ),
-        h(
-          "div",
-          null,
-          this.store.data.count > 0
-            ? h(
-                "button",
-                {
-                  onClick: this.stopSong.bind(this),
-                  class: "btn btn-outline-info btn-stop"
-                },
-                "Stop & \u6682\u505C"
-              )
-            : h(
-                "div",
-                null,
-                h(
-                  "button",
-                  {
-                    onClick: this.playSong.bind(this, moon),
-                    class: "btn btn-outline-info"
-                  },
-                  "\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3"
-                ),
-                h(
-                  "button",
-                  {
-                    onClick: this.playSong.bind(this, pgydyd),
-                    class: "btn btn-outline-info"
-                  },
-                  "\u84B2\u516C\u82F1\u7684\u7EA6\u5B9A"
-                ),
-                h(
-                  "button",
-                  {
-                    onClick: this.playSong.bind(this, xxy),
-                    class: "btn btn-outline-info"
-                  },
-                  "\u5C0F\u5E78\u8FD0"
-                ),
-                h(
-                  "button",
-                  {
-                    onClick: this.playSong.bind(this, fuji),
-                    class: "btn btn-outline-info"
-                  },
-                  "\u5BCC\u58EB\u5C71\u4E0B&\u7231\u60C5\u8F6C\u79FB"
-                )
-              )
-        )
-      )
+              style: {
+                display: item.black.name ? "block" : "none"
+              },
+              class: "piano-key__black",
+              onClick: this.playNote.bind(this, item.black.name),
+              "data-key": item.black.keyCode,
+              "data-note": item.black.name
+            },
+            h(
+              "span",
+              {
+                class: "piano-note",
+                style: "color:#fff"
+              },
+              item.black.name
+            ),
+            h("audio", {
+              preload: "auto",
+              src: this.data.notes[item.white.name].url,
+              hidden: "true",
+              "data-note": item.white.name,
+              class: "audioEle"
+            })
+          )
+        );
+      })
     );
   }
 
@@ -604,7 +533,7 @@ AppPiano.css = `
   }
 
   .piano {
-    margin: 0 200px;
+    /* margin: 0 auto; */
     background: linear-gradient(-65deg, #000, #222, #000, #666, #222 75%);
     border-top: .8rem solid #282828;
     -webkit-box-shadow: inset 0 -1px 1px hsla(0, 0%, 100%, .5), inset -0.4rem 0.4rem #282828;
@@ -612,24 +541,24 @@ AppPiano.css = `
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    height: 80vh;
-    height: 20vh;
+    /* height: 80vh; */
+    height: 200px;
+    width: 1000px;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
     overflow: hidden;
-    padding-bottom: 2%;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
+    /* padding-bottom: 2%; */
+    /* padding-left: 2.5%; */
+    /* padding-right: 2.5%; */
   }
 
-  @media screen and (max-width: 1000px) {
-
-    /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+  /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+  /* @media screen and (max-width: 1000px) {
     .piano {
       margin: 0 10px;
     }
-  }
+  } */
 
   .piano-key {
     color: blue;

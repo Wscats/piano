@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            width: 300px;
+        }
+
+        a:link {
+            color: #FF0000
+        }
+
+        /* 未访问的链接 */
+        a:visited {
+            color: #0000FF
+        }
+
+        /* 已访问的链接 */
+        a:hover {
+            color: #FF00FF
+        }
+
+        /* 鼠标移动到链接上 */
+        a:active {
+            color: #00FF00
+        }
+
+        /* 选定的链接 */
+    </style>
+</head>
+
+<body>
+    <p>This extension is using in <a target="_blank" href="https://docs.qq.com">tencent documents</a> applications.
+        <span class="status">✅</span>
+    </p>
+    <p>Open the developer tools, and the Tencent Docs Dev Tools tab will appear to the right.😁</p>
+    <script src="../../core/popup.js"></script>
+</body>
+
+</html>

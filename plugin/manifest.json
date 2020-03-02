@@ -1,0 +1,68 @@
+{
+    "name": "Tencent Docs Dev Tools",
+    "manifest_version": 2,
+    "version": "1.00",
+    "description": "Chrome devtools extension for debugging tencent documents applications.",
+    "icons": {
+        "16": "./public/logo/logo-128.png",
+        "48": "./public/logo/logo-128.png",
+        "128": "./public/logo/logo-128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://docs.qq.com/*"
+            ],
+            "run_at": "document_end",
+            "js": [
+                "./core/content.js"
+            ]
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "./core/hook.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "./core/detector.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "devtools_page": "./public/page/devtool.html",
+    "background": {
+        "page": "./public/page/background.html",
+        "persistent": false
+    },
+    "permissions": [
+        "http://*/*",
+        "https://*/*",
+        "file:///*",
+        "tabs",
+        "contextMenus",
+        "storage",
+        "clipboardWrite",
+        "clipboardRead"
+    ],
+    "web_accessible_resources": [
+        "core/*",
+        "public/*"
+    ],
+    "browser_action": {
+        "default_title": "",
+        "default_icon": {
+            "16": "./public/logo/logo-128.png",
+            "48": "./public/logo/logo-128.png",
+            "128": "./public/logo/logo-128.png"
+        },
+        "default_popup": "./build/index.html"
+    }
+}

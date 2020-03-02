@@ -7,9 +7,9 @@ define('my-app', class extends WeElement {
   render() {
     return (
       <div class="app">
-        <app-header />
+        {/* <app-header /> */}
         <app-piano />
-        <app-footer />
+        {/* <app-footer /> */}
       </div>
     )
   }

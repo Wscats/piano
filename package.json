@@ -110,7 +110,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "PUBLIC_URL=. node scripts/build.js",
+    "build": "PUBLIC_URL=. node scripts/build.js && node copy",
     "build-windows": "set PUBLIC_URL=.&& node scripts/build.js",
     "fix": "eslint src --fix",
     "postinstall": "opencollective-postinstall || true"

@@ -1,43 +1,24 @@
 <template name="app-piano">
-  <div class="">
-    <div class="piano">
-      {this.data.pianoKeys.map((item)=>{return(
-      <div class="piano-key">
-        <div data-type="white" ref={e=>{ this[item.white.name] = e }} class="piano-key__white"
-          onClick={this.playNote.bind(this,item.white.name)} data-key={item.white.keyCode}
-          data-note={item.white.name}>
-          <span class="piano-note">{item.white.name}</span>
-          <audio preload="auto" src={this.data.notes[item.white.name].url} hidden='true' data-note={item.white.name}
-            class='audioEle'></audio>
-        </div>
-        <div data-type="black" ref={e=>{ this[item.black.name] = e }} style={{
+  <div class="piano">
+    {this.data.pianoKeys.map((item)=>{return(
+    <div class="piano-key">
+      <div data-type="white" ref={e=>{ this[item.white.name] = e }} class="piano-key__white"
+        onClick={this.playNote.bind(this,item.white.name)} data-key={item.white.keyCode}
+        data-note={item.white.name}>
+        <span class="piano-note">{item.white.name}</span>
+        <audio preload="auto" src={this.data.notes[item.white.name].url} hidden='true' data-note={item.white.name}
+          class='audioEle'></audio>
+      </div>
+      <div data-type="black" ref={e=>{ this[item.black.name] = e }} style={{
           display: item.black.name ? 'block' : 'none'
         }} class="piano-key__black" onClick={this.playNote.bind(this,item.black.name)} data-key={item.black.keyCode}
-          data-note={item.black.name}>
-          <span class="piano-note" style="color:#fff">{item.black.name}</span>
-          <audio preload="auto" src={this.data.notes[item.white.name].url} hidden='true' data-note={item.white.name}
-            class='audioEle'></audio>
-        </div>
-      </div>
-      )})}
-    </div>
-
-    <div class="text-center">
-      <p>Click the button below to let the piano play the song automatically:</p>
-      <p>点击下面按钮让钢琴自动演奏歌曲:</p>
-      <div>
-        {this.store.data.count>0?(
-        <button onClick={this.stopSong.bind(this)} class="btn btn-outline-info btn-stop">Stop & 暂停</button>
-        ):(
-        <div>
-          <button onClick={this.playSong.bind(this,moon)} class="btn btn-outline-info">月亮代表我的心</button>
-          <button onClick={this.playSong.bind(this,pgydyd)} class="btn btn-outline-info">蒲公英的约定</button>
-          <button onClick={this.playSong.bind(this,xxy)} class="btn btn-outline-info">小幸运</button>
-          <button onClick={this.playSong.bind(this,fuji)} class="btn btn-outline-info">富士山下&爱情转移</button>
-        </div>
-        )}
+        data-note={item.black.name}>
+        <span class="piano-note" style="color:#fff">{item.black.name}</span>
+        <audio preload="auto" src={this.data.notes[item.white.name].url} hidden='true' data-note={item.white.name}
+          class='audioEle'></audio>
       </div>
     </div>
+    )})}
   </div>
 </template>
 <script>
@@ -48,11 +29,13 @@
   // 演示：富士山下
   import fuji from './songs/fuji.js'
   // 演示：后来
-  import later from './songs/later.js'
+  // import later from './songs/later.js'
   // 蒲公英的约定
   import pgydyd from './songs/pgydyd.js'
   // 小幸运
   import xxy from './songs/xxy.js'
+  // 后来
+  import hl from './songs/hl.js'
   // 音符和键盘的映射关系表
   import pianoKeys from './pianoKeys.js'
   export default class {
@@ -455,7 +438,7 @@
   }
 
   .piano {
-    margin: 0 200px;
+    /* margin: 0 auto; */
     background: linear-gradient(-65deg, #000, #222, #000, #666, #222 75%);
     border-top: .8rem solid #282828;
     -webkit-box-shadow: inset 0 -1px 1px hsla(0, 0%, 100%, .5), inset -0.4rem 0.4rem #282828;
@@ -463,24 +446,24 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    height: 80vh;
-    height: 20vh;
+    /* height: 80vh; */
+    height: 200px;
+    width: 1000px;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
     overflow: hidden;
-    padding-bottom: 2%;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
+    /* padding-bottom: 2%; */
+    /* padding-left: 2.5%; */
+    /* padding-right: 2.5%; */
   }
 
-  @media screen and (max-width: 1000px) {
-
-    /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+  /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+  /* @media screen and (max-width: 1000px) {
     .piano {
       margin: 0 10px;
     }
-  }
+  } */
 
   .piano-key {
     color: blue;
