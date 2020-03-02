@@ -16,6 +16,8 @@ class AppPiano extends WeElement {
     this.sub = () => this.store.sub();
 
     this.setSong = song => this.store.setSong(song);
+
+    this.setCount = count => this.store.setSong(count);
   }
 
   render(props) {
@@ -111,7 +113,8 @@ class AppPiano extends WeElement {
         h(
           "p",
           null,
-          "\u70B9\u51FB\u4E0B\u9762\u6309\u94AE\u8BA9\u94A2\u7434\u81EA\u52A8\u6F14\u594F\u6B4C\u66F2:"
+          "\u70B9\u51FB\u4E0B\u9762\u6309\u94AE\u8BA9\u94A2\u7434\u81EA\u52A8\u6F14\u594F\u6B4C\u66F2:",
+          this.store.data.count > 0 ? "1" : "0"
         ),
         h(
           "div",
@@ -253,8 +256,6 @@ class AppPiano extends WeElement {
         }
       }
     };
-
-    console.log(this.data.notes);
   }
 
   stopSong() {
@@ -338,6 +339,7 @@ class AppPiano extends WeElement {
           }, time);
         });
         offset++;
+        this.update();
         this.add();
         playSong();
       } else {

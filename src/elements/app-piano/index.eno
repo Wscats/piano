@@ -24,7 +24,7 @@
 
     <div class="text-center">
       <p>Click the button below to let the piano play the song automatically:</p>
-      <p>点击下面按钮让钢琴自动演奏歌曲:</p>
+      <p>点击下面按钮让钢琴自动演奏歌曲:{this.store.data.count>0?'1':'0'}</p>
       <div>
         {this.store.data.count>0?(
         <button onClick={this.stopSong.bind(this)} class="btn btn-outline-info btn-stop">Stop & 暂停</button>
@@ -62,6 +62,7 @@
     add = () => this.store.add()
     sub = () => this.store.sub()
     setSong = (song) => this.store.setSong(song)
+    setCount = (count) => this.store.setSong(count)
     install() {
       this.data = {
         // 琴音，所有音符的播放地址
@@ -134,7 +135,6 @@
           }
         }
       }
-      console.log(this.data.notes)
       // 进入页面后5秒后自动播放
       // this.timer = setTimeout(() => {
       //   this.playSong(moon)
@@ -212,6 +212,10 @@
             }, time)
           })
           offset++
+          // console.log(offset)
+          // console.log(this.store.data.count)
+          // 这里太久都忘了为什么 offset 是怎么变的了，用强制更新让 count 更新来激活暂停按钮吧
+          this.update()
           // 自定义事件，跟下面底部的音符自动跳动结合
           this.add()
           playSong()
