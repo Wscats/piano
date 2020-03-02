@@ -15,8 +15,8 @@
         }} class="piano-key__black" onClick={this.playNote.bind(this,item.black.name)} data-key={item.black.keyCode}
           data-note={item.black.name}>
           <span class="piano-note" style="color:#fff">{item.black.name}</span>
-          <audio preload="auto" src={this.data.notes[item.white.name].url} hidden='true' data-note={item.white.name}
-            class='audioEle'></audio>
+          <audio preload="auto" src={this.data.notes[item.black.name]&&this.data.notes[item.black.name].url}
+            hidden='true' data-note={item.black.name} class='audioEle'></audio>
         </div>
       </div>
       )})}
@@ -134,6 +134,7 @@
           }
         }
       }
+      console.log(this.data.notes)
       // 进入页面后5秒后自动播放
       // this.timer = setTimeout(() => {
       //   this.playSong(moon)

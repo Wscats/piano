@@ -87,9 +87,11 @@ class AppPiano extends WeElement {
               ),
               h("audio", {
                 preload: "auto",
-                src: this.data.notes[item.white.name].url,
+                src:
+                  this.data.notes[item.black.name] &&
+                  this.data.notes[item.black.name].url,
                 hidden: "true",
-                "data-note": item.white.name,
+                "data-note": item.black.name,
                 class: "audioEle"
               })
             )
@@ -251,6 +253,8 @@ class AppPiano extends WeElement {
         }
       }
     };
+
+    console.log(this.data.notes);
   }
 
   stopSong() {
