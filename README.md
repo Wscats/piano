@@ -34,7 +34,7 @@
 
 <img width="250px" align="right" src="./public/piano.gif"/>
 
-> 体验地址： https://wscats.github.io/piano/build/ 
+> 体验地址： http://wscats.gitee.io/piano/build/ 或者 https://wscats.github.io/piano/build/ 
 
 
 > 项目地址： https://github.com/Wscats/piano
