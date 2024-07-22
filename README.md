@@ -603,6 +603,10 @@ Support this project with your organization. Your logo will show up here with a 
 <a href="https://opencollective.com/piano/organization/8/website"><img src="https://opencollective.com/piano/organization/8/avatar.svg"></a>
 <a href="https://opencollective.com/piano/organization/9/website"><img src="https://opencollective.com/piano/organization/9/avatar.svg"></a>
 
+# Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/Wscats/piano.svg?variant=adaptive)](https://starchart.cc/Wscats/piano)
+
 # License
 
 Omi Piano is released under the 
