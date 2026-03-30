@@ -113,7 +113,10 @@
     "build": "PUBLIC_URL=. node scripts/build.js",
     "build-windows": "set PUBLIC_URL=.&& node scripts/build.js",
     "fix": "eslint src --fix",
-    "postinstall": "opencollective-postinstall || true"
+    "postinstall": "opencollective-postinstall || true",
+    "lint": "eslint src --ext .ts,.tsx,.js,.jsx --fix",
+    "test": "jest --coverage",
+    "type-check": "tsc --noEmit"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -185,5 +188,8 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/piano"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
