@@ -1,19 +1,24 @@
 /**
- * Unified error handling utilities
- * Based on wscats-projects-refactor-spec.md
+ * Unified error handling utilities.
+ * @module error-handling
  */
 
+/**
+ * Application-specific error class with error codes.
+ */
 export class AppError extends Error {
   constructor(
     message: string,
     public readonly code: string,
     public readonly statusCode: number = 500,
-    public readonly details?: unknown
+    public readonly details?: unknown,
   ) {
     super(message);
     this.name = 'AppError';
-    // Restore prototype chain (TypeScript issue with extending Error)
-    Object.setPrototypeOf(this, AppError.prototype);
+    // Maintain proper stack trace in V8
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, AppError);
+    }
   }
 
   static notFound(resource: string): AppError {
@@ -24,76 +29,69 @@ export class AppError extends Error {
     return new AppError(message, 'VALIDATION_ERROR', 400, details);
   }
 
-  static unauthorized(): AppError {
-    return new AppError('Unauthorized', 'UNAUTHORIZED', 401);
+  static unauthorized(message = 'Unauthorized'): AppError {
+    return new AppError(message, 'UNAUTHORIZED', 401);
   }
 
-  static forbidden(): AppError {
-    return new AppError('Forbidden', 'FORBIDDEN', 403);
+  static forbidden(message = 'Forbidden'): AppError {
+    return new AppError(message, 'FORBIDDEN', 403);
   }
 
-  static internal(message: string): AppError {
-    return new AppError(message, 'INTERNAL_ERROR', 500);
-  }
-
-  toJSON() {
+  toJSON(): Record<string, unknown> {
     return {
-      error: {
-        code: this.code,
-        message: this.message,
-        ...(this.details ? { details: this.details } : {}),
-      },
+      name: this.name,
+      code: this.code,
+      message: this.message,
+      statusCode: this.statusCode,
+      ...(this.details ? { details: this.details } : {}),
     };
   }
 }
 
 /**
- * Result type for avoiding try-catch hell
+ * Result type for operations that can fail.
+ * Avoids try-catch hell by making errors explicit in the type system.
  */
 export type Result<T, E = AppError> =
   | { success: true; data: T }
   | { success: false; error: E };
 
-export function ok<T>(data: T): Result<T, never> {
-  return { success: true, data };
-}
-
-export function err<E>(error: E): Result<never, E> {
-  return { success: false, error };
-}
-
 /**
- * Wraps an async function in a Result type
+ * Wrap an async function to return a Result instead of throwing.
  */
 export async function safeAsync<T>(fn: () => Promise<T>): Promise<Result<T>> {
   try {
-    return ok(await fn());
+    return { success: true, data: await fn() };
   } catch (error) {
-    return err(
-      error instanceof AppError
-        ? error
-        : new AppError(
-            (error as Error).message || 'Unknown error',
-            'UNKNOWN_ERROR'
-          )
-    );
+    if (error instanceof AppError) {
+      return { success: false, error };
+    }
+    return {
+      success: false,
+      error: new AppError(
+        error instanceof Error ? error.message : String(error),
+        'UNKNOWN_ERROR',
+      ),
+    };
   }
 }
 
 /**
- * Wraps a sync function in a Result type
+ * Wrap a sync function to return a Result instead of throwing.
  */
 export function safeSync<T>(fn: () => T): Result<T> {
   try {
-    return ok(fn());
+    return { success: true, data: fn() };
   } catch (error) {
-    return err(
-      error instanceof AppError
-        ? error
-        : new AppError(
-            (error as Error).message || 'Unknown error',
-            'UNKNOWN_ERROR'
-          )
-    );
+    if (error instanceof AppError) {
+      return { success: false, error };
+    }
+    return {
+      success: false,
+      error: new AppError(
+        error instanceof Error ? error.message : String(error),
+        'UNKNOWN_ERROR',
+      ),
+    };
   }
 }

@@ -62,7 +62,7 @@ if (process.env.HOST) {
 // run on a different port. `choosePort()` Promise resolves to the next free port.
 choosePort(HOST, DEFAULT_PORT)
   .then(port => {
-    if (port == null) {
+    if (port === null) {
       // We have not found a port.
       return;
     }

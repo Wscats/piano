@@ -1,3 +1,5 @@
+'use strict';
+
 '3', '4', '5', '5', '5', '6', '7', 'Option+1..',
 'Option+1', 'Option+1', '7', 'Option+2', '6', '5', '5', '5', 'Option+2', 'Option+1', 'Option+1', 'Option+3', 'Option+3..',
 'Option+1', 'Option+2', 'Option+3', 'Option+3', 'Option+4', 'Option+3', 'Option+2', 'Option+3', 'Option+1', 'Option+1', '6', '6',

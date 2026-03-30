@@ -176,7 +176,7 @@ class AppPiano extends WeElement {
     };
 
     document.onkeydown = event => {
-      var e = event || window.event || arguments.callee.caller.arguments[0];
+      const e = event || window.event || arguments.callee.caller.arguments[0];
 
       let playNote = key => {
         if (e.shiftKey === true) {

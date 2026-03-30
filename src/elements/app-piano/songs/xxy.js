@@ -1,3 +1,5 @@
+'use strict';
+
 // 小幸运
 const song = [
     // 前奏

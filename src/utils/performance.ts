@@ -1,14 +1,15 @@
 /**
- * Performance optimization utilities
- * Based on wscats-projects-refactor-spec.md
+ * Performance optimization utilities.
+ * @module performance
  */
 
 /**
- * Debounce: delays execution until after wait ms have elapsed since last call
+ * Debounce a function call.
+ * The function will only be called after `delay` ms of inactivity.
  */
 export function debounce<T extends (...args: unknown[]) => unknown>(
   fn: T,
-  delay: number
+  delay: number,
 ): (...args: Parameters<T>) => void {
   let timer: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
@@ -18,11 +19,12 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
 }
 
 /**
- * Throttle: ensures function is called at most once per interval
+ * Throttle a function call.
+ * The function will be called at most once per `interval` ms.
  */
 export function throttle<T extends (...args: unknown[]) => unknown>(
   fn: T,
-  interval: number
+  interval: number,
 ): (...args: Parameters<T>) => void {
   let lastTime = 0;
   return (...args: Parameters<T>) => {
@@ -35,98 +37,67 @@ export function throttle<T extends (...args: unknown[]) => unknown>(
 }
 
 /**
- * Memoize: caches function results based on arguments
+ * Memoize a function with a simple cache.
+ * Uses JSON.stringify for cache key generation.
  */
 export function memoize<T extends (...args: unknown[]) => unknown>(
   fn: T,
-  options?: { maxSize?: number; ttl?: number }
+  maxSize = 100,
 ): T {
-  const cache = new Map<string, { value: unknown; expiry: number }>();
-  const maxSize = options?.maxSize ?? 100;
-  const ttl = options?.ttl ?? 0; // 0 = no expiry
+  const cache = new Map<string, ReturnType<T>>();
 
-  return ((...args: unknown[]) => {
+  return ((...args: Parameters<T>) => {
     const key = JSON.stringify(args);
-    const cached = cache.get(key);
-
-    if (cached && (!ttl || Date.now() < cached.expiry)) {
-      return cached.value;
+    if (cache.has(key)) {
+      return cache.get(key)!;
     }
-
-    const result = fn(...args);
-    cache.set(key, {
-      value: result,
-      expiry: ttl ? Date.now() + ttl : Infinity,
-    });
-
-    // Evict oldest entries if cache is too large
-    if (cache.size > maxSize) {
+    const result = fn(...args) as ReturnType<T>;
+    if (cache.size >= maxSize) {
       const firstKey = cache.keys().next().value;
       if (firstKey !== undefined) cache.delete(firstKey);
     }
-
+    cache.set(key, result);
     return result;
   }) as T;
 }
 
 /**
- * Simple performance measurement decorator (for class methods)
+ * Retry an async operation with exponential backoff.
  */
-export function measure(
-  target: object,
-  propertyKey: string,
-  descriptor: PropertyDescriptor
-): PropertyDescriptor {
-  const original = descriptor.value;
-
-  descriptor.value = function (...args: unknown[]) {
-    const start = performance.now();
-    const result = original.apply(this, args);
-
-    if (result instanceof Promise) {
-      return result.finally(() => {
-        const duration = performance.now() - start;
-        console.debug(`[perf] ${propertyKey}: ${duration.toFixed(2)}ms`);
-      });
+export async function retry<T>(
+  fn: () => Promise<T>,
+  maxRetries = 3,
+  baseDelay = 1000,
+): Promise<T> {
+  let lastError: Error | undefined;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      if (attempt < maxRetries) {
+        const delay = baseDelay * Math.pow(2, attempt);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
     }
-
-    const duration = performance.now() - start;
-    console.debug(`[perf] ${propertyKey}: ${duration.toFixed(2)}ms`);
-    return result;
-  };
-
-  return descriptor;
-}
-
-/**
- * RequestIdleCallback polyfill for scheduling non-critical work
- */
-export function scheduleIdle(
-  callback: () => void,
-  options?: { timeout?: number }
-): void {
-  if (typeof requestIdleCallback !== 'undefined') {
-    requestIdleCallback(() => callback(), options);
-  } else {
-    setTimeout(callback, 1);
   }
+  throw lastError;
 }
 
 /**
- * Virtual list helper for large data rendering
+ * Measure the execution time of an async function.
  */
-export function getVisibleRange(
-  scrollTop: number,
-  containerHeight: number,
-  itemHeight: number,
-  totalItems: number,
-  overscan: number = 3
-): { startIndex: number; endIndex: number; offsetY: number } {
-  const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
-  const endIndex = Math.min(
-    totalItems,
-    Math.ceil((scrollTop + containerHeight) / itemHeight) + overscan
-  );
-  const offsetY = startIndex * itemHeight;
-  return { startIndex, endIndex, offsetY };
+export async function measureAsync<T>(
+  label: string,
+  fn: () => Promise<T>,
+): Promise<T> {
+  const start = performance.now();
+  try {
+    return await fn();
+  } finally {
+    const duration = performance.now() - start;
+    if (typeof console !== 'undefined') {
+      console.debug(`[perf] ${label}: ${duration.toFixed(2)}ms`);
+    }
+  }
 }

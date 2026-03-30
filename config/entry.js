@@ -1,8 +1,10 @@
+'use strict';
+
 let fs = require('fs'),
     fileList = [];
 
 
-if (typeof String.prototype.endsWith != 'function') {
+if (typeof String.prototype.endsWith !== 'function') {
     String.prototype.endsWith = function (suffix) {
         return this.indexOf(suffix, this.length - suffix.length) !== -1;
     };

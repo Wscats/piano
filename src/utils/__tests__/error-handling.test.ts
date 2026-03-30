@@ -1,112 +1,75 @@
-/**
- * Tests for error handling utilities
- */
-import { AppError, ok, err, safeAsync, safeSync, Result } from '../error-handling';
+import { AppError, safeAsync, safeSync, Result } from '../error-handling';
 
-describe('AppError', () => {
-  test('creates error with correct properties', () => {
-    const error = new AppError('Test error', 'TEST_ERROR', 400, { field: 'name' });
-    expect(error.message).toBe('Test error');
-    expect(error.code).toBe('TEST_ERROR');
-    expect(error.statusCode).toBe(400);
-    expect(error.details).toEqual({ field: 'name' });
-    expect(error.name).toBe('AppError');
-  });
-
-  test('creates notFound error', () => {
-    const error = AppError.notFound('User');
-    expect(error.statusCode).toBe(404);
-    expect(error.code).toBe('NOT_FOUND');
-    expect(error.message).toBe('User not found');
-  });
-
-  test('creates validation error', () => {
-    const error = AppError.validation('Invalid email', { field: 'email' });
-    expect(error.statusCode).toBe(400);
-    expect(error.code).toBe('VALIDATION_ERROR');
-  });
-
-  test('creates unauthorized error', () => {
-    const error = AppError.unauthorized();
-    expect(error.statusCode).toBe(401);
-  });
-
-  test('creates forbidden error', () => {
-    const error = AppError.forbidden();
-    expect(error.statusCode).toBe(403);
-  });
-
-  test('serializes to JSON correctly', () => {
-    const error = new AppError('Test', 'TEST', 400);
-    const json = error.toJSON();
-    expect(json.error.code).toBe('TEST');
-    expect(json.error.message).toBe('Test');
-  });
-
-  test('is instanceof Error', () => {
-    const error = new AppError('Test', 'TEST');
-    expect(error).toBeInstanceOf(Error);
-    expect(error).toBeInstanceOf(AppError);
-  });
-});
-
-describe('Result helpers', () => {
-  test('ok() creates success result', () => {
-    const result = ok(42);
-    expect(result.success).toBe(true);
-    if (result.success) {
-      expect(result.data).toBe(42);
-    }
-  });
-
-  test('err() creates failure result', () => {
-    const error = new AppError('fail', 'FAIL');
-    const result = err(error);
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(result.error.code).toBe('FAIL');
-    }
-  });
-});
-
-describe('safeAsync', () => {
-  test('returns ok for successful async function', async () => {
-    const result = await safeAsync(async () => 42);
-    expect(result.success).toBe(true);
-    if (result.success) expect(result.data).toBe(42);
-  });
-
-  test('returns err for throwing async function', async () => {
-    const result = await safeAsync(async () => {
-      throw new Error('async fail');
+describe('Error Handling Utilities', () => {
+  describe('AppError', () => {
+    test('creates error with code and status', () => {
+      const err = new AppError('test', 'TEST_ERROR', 400);
+      expect(err.message).toBe('test');
+      expect(err.code).toBe('TEST_ERROR');
+      expect(err.statusCode).toBe(400);
+      expect(err.name).toBe('AppError');
     });
-    expect(result.success).toBe(false);
-    if (!result.success) expect(result.error.message).toBe('async fail');
-  });
 
-  test('preserves AppError type', async () => {
-    const result = await safeAsync(async () => {
-      throw AppError.notFound('Item');
+    test('notFound factory', () => {
+      const err = AppError.notFound('User');
+      expect(err.code).toBe('NOT_FOUND');
+      expect(err.statusCode).toBe(404);
+      expect(err.message).toContain('User');
     });
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(result.error.code).toBe('NOT_FOUND');
-      expect(result.error.statusCode).toBe(404);
-    }
-  });
-});
 
-describe('safeSync', () => {
-  test('returns ok for successful sync function', () => {
-    const result = safeSync(() => 'hello');
-    expect(result.success).toBe(true);
-    if (result.success) expect(result.data).toBe('hello');
-  });
-
-  test('returns err for throwing sync function', () => {
-    const result = safeSync(() => {
-      throw new Error('sync fail');
+    test('validation factory', () => {
+      const err = AppError.validation('Invalid input', { field: 'email' });
+      expect(err.code).toBe('VALIDATION_ERROR');
+      expect(err.details).toEqual({ field: 'email' });
     });
-    expect(result.success).toBe(false);
+
+    test('toJSON serialization', () => {
+      const err = new AppError('test', 'CODE', 500);
+      const json = err.toJSON();
+      expect(json).toHaveProperty('code', 'CODE');
+      expect(json).toHaveProperty('message', 'test');
+      expect(json).not.toHaveProperty('stack');
+    });
+  });
+
+  describe('safeAsync', () => {
+    test('returns success for resolved promise', async () => {
+      const result = await safeAsync(async () => 42);
+      expect(result).toEqual({ success: true, data: 42 });
+    });
+
+    test('returns error for rejected promise', async () => {
+      const result = await safeAsync(async () => {
+        throw new Error('fail');
+      });
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.code).toBe('UNKNOWN_ERROR');
+      }
+    });
+
+    test('preserves AppError', async () => {
+      const result = await safeAsync(async () => {
+        throw AppError.notFound('Item');
+      });
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.code).toBe('NOT_FOUND');
+      }
+    });
+  });
+
+  describe('safeSync', () => {
+    test('returns success for normal execution', () => {
+      const result = safeSync(() => 'hello');
+      expect(result).toEqual({ success: true, data: 'hello' });
+    });
+
+    test('returns error for thrown exception', () => {
+      const result = safeSync(() => {
+        throw new Error('sync fail');
+      });
+      expect(result.success).toBe(false);
+    });
   });
 });

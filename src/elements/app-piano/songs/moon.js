@@ -1,3 +1,5 @@
+'use strict';
+
 const song = [
     {// 月亮代表我的心
         // -5

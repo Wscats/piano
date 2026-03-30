@@ -116,7 +116,10 @@
     "postinstall": "opencollective-postinstall || true",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx --fix",
     "test": "jest --coverage",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "lint:check": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "jest": {
     "collectCoverageFrom": [
@@ -191,5 +194,15 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "author": "wscats (https://github.com/wscats)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wscats/piano.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wscats/piano/issues"
+  },
+  "homepage": "https://github.com/wscats/piano#readme"
 }
