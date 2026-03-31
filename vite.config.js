@@ -12,6 +12,14 @@ export default defineConfig({
   build: {
     target: 'es2022',
     outDir: 'dist',
+    chunkSizeWarningLimit: 4000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'song-library': ['./src/elements/app-piano/songs/song-library.js'],
+        },
+      },
+    },
   },
 
   server: {
