@@ -176,7 +176,7 @@ class AppPiano extends WeElement {
     };
 
     document.onkeydown = event => {
-      const e = event || window.event || arguments.callee.caller.arguments[0];
+      const e = event || window.event;
 
       let playNote = key => {
         if (e.shiftKey === true) {
@@ -262,11 +262,10 @@ class AppPiano extends WeElement {
     clearTimeout(this.timer);
     this.store.data.song = [];
     this.store.data.count = 0;
-    console.log("reset");
   }
 
   playNote(name) {
-    console.log(this.data.notes[name]);
+    if (!this.data.notes[name]) return;
 
     if (!this.data.notes[name]["isPlay"]) {
       let audio = this[name].childNodes[1];
@@ -317,7 +316,6 @@ class AppPiano extends WeElement {
             break;
 
           case "object":
-            console.log(song[offset]["note"]);
             time = song[offset]["time"];
             this.playNote(song[offset]["note"]);
             break;
@@ -376,7 +374,6 @@ class AppPiano extends WeElement {
             break;
 
           case "object":
-            console.log(song[offset]["note"]);
             time = song[offset]["time"];
             this.playNote(song[offset]["note"]);
             break;
@@ -591,7 +588,6 @@ class AppPiano extends WeElement {
         break;
     }
 
-    console.log(`${note + (halfKey > 0 ? "#" : "") + key}`);
     this.playNote(`${note + (halfKey > 0 ? "#" : "") + key}`);
     return time;
   }
@@ -630,8 +626,6 @@ AppPiano.css = `
   }
 
   @media screen and (max-width: 1000px) {
-
-    /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
     .piano {
       margin: 0 10px;
     }
@@ -678,8 +672,6 @@ AppPiano.css = `
 
   .piano-note {
     color: #000;
-    /* 隐藏音符显示 */
-    /* font-size: 8px; */
     font-size: 0px;
     text-align: center;
     height: 20px;
@@ -712,18 +704,12 @@ AppPiano.css = `
     display: inline-block;
     font-weight: 400;
     text-align: center;
-    /* white-space: nowrap; */
     vertical-align: middle;
-    /* -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; */
     border: 1px solid #17a2b8;
     padding: 8px 8px;
     font-size: 16px;
     line-height: 16px;
     border-radius: 2.5px;
-    /* transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; */
   }
 
   .btn-stop {
