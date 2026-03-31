@@ -1,6 +1,7 @@
+import type { Song } from '../../../types';
 'use strict';
 
-const song = [
+const song: Song = [
     {// 月亮代表我的心
         // -5
         note: 'G3',

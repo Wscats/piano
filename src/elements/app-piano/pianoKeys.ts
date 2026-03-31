@@ -1,6 +1,7 @@
 
+import type { PianoKeyPair } from '../../types';
 
-export default[{
+const pianoKeys: PianoKeyPair[] = [{
     black: { name: "C#2", keyCode: 81 },
     white: { name: "C2", keyCode: 49 },
 },
@@ -139,4 +140,6 @@ export default[{
 {
     black: { name: null, keyCode: null },
     white: { name: "B6", keyCode: 55 }
-}]
+}];
+
+export default pianoKeys;

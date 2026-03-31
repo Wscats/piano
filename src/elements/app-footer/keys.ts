@@ -1,4 +1,6 @@
-export default {
+import type { KeyboardMap } from '../../types';
+
+const keys: KeyboardMap = {
     // A
     A2: "Shift+6",
     A3: "Ctrl+6",
@@ -71,4 +73,6 @@ export default {
     'G#4': "./samples/piano/b79.mp3",
     'G#5': "./samples/piano/b72.mp3",
     'G#6': "./samples/piano/b86.mp3"
-}
+};
+
+export default keys;

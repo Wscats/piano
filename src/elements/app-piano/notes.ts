@@ -1,4 +1,6 @@
-export default {
+import type { NotesMap } from '../../types';
+
+const notes: NotesMap = {
   A2: { url: "./samples/piano/a54.mp3", isPlay: false },
   A3: { url: "./samples/piano/a69.mp3", isPlay: false },
   A4: { url: "./samples/piano/a80.mp3", isPlay: false },
@@ -59,4 +61,6 @@ export default {
   'G#4': { url: "./samples/piano/b79.mp3", isPlay: false },
   'G#5': { url: "./samples/piano/b72.mp3", isPlay: false },
   'G#6': { url: "./samples/piano/b86.mp3", isPlay: false }
-}
+};
+
+export default notes;
