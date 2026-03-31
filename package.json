@@ -109,9 +109,12 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate-wasm": "node scripts/generate-wasm.js",
     "start": "node scripts/start.js",
-    "build": "PUBLIC_URL=. node scripts/build.js",
-    "build-windows": "set PUBLIC_URL=.&& node scripts/build.js",
+    "build:webpack": "PUBLIC_URL=. node scripts/build.js",
     "fix": "eslint src --fix",
     "postinstall": "opencollective-postinstall || true",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx --fix",
@@ -191,6 +194,11 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/piano"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "typescript": "^5.5.0",
+    "@vitejs/plugin-legacy": "^5.4.0"
   },
   "engines": {
     "node": ">=18.0.0"

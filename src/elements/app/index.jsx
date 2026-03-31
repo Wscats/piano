@@ -1,4 +1,4 @@
-import { define, WeElement } from 'omi'
+import { define, WeElement, h } from 'omi'
 import '../app-header'
 import '../app-footer'
 import '../app-piano'

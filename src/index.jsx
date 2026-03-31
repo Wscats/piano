@@ -1,4 +1,4 @@
-import { render } from 'omi'
+import { render, h } from 'omi'
 import './assets/index.css'
 import './elements/app'
 

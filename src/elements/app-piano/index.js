@@ -6,56 +6,45 @@ import later from "./songs/later.js";
 import pgydyd from "./songs/pgydyd.js";
 import xxy from "./songs/xxy.js";
 import pianoKeys from "./pianoKeys.js";
+import { PianoWorkerManager } from "../../workers/worker-manager.ts";
+import { loadPianoWasm, parseNote, isWasmReady } from "../../wasm/wasm-client.ts";
 
 class AppPiano extends WeElement {
   constructor(...args) {
     super(...args);
 
+    /** @type {PianoWorkerManager} */
+    this.workerManager = null;
+    this.wasmReady = false;
+
     this.add = () => this.store.add();
-
     this.sub = () => this.store.sub();
-
     this.setSong = song => this.store.setSong(song);
-
     this.setCount = count => this.store.setSong(count);
   }
 
   render(props) {
     return h(
       "div",
-      {
-        class: ""
-      },
+      { class: "" },
       h(
         "div",
-        {
-          class: "piano"
-        },
+        { class: "piano" },
         this.data.pianoKeys.map(item => {
           return h(
             "div",
-            {
-              class: "piano-key"
-            },
+            { class: "piano-key" },
             h(
               "div",
               {
                 "data-type": "white",
-                ref: e => {
-                  this[item.white.name] = e;
-                },
+                ref: e => { this[item.white.name] = e; },
                 class: "piano-key__white",
                 onClick: this.playNote.bind(this, item.white.name),
                 "data-key": item.white.keyCode,
                 "data-note": item.white.name
               },
-              h(
-                "span",
-                {
-                  class: "piano-note"
-                },
-                item.white.name
-              ),
+              h("span", { class: "piano-note" }, item.white.name),
               h("audio", {
                 preload: "auto",
                 src: this.data.notes[item.white.name].url,
@@ -68,30 +57,17 @@ class AppPiano extends WeElement {
               "div",
               {
                 "data-type": "black",
-                ref: e => {
-                  this[item.black.name] = e;
-                },
-                style: {
-                  display: item.black.name ? "block" : "none"
-                },
+                ref: e => { this[item.black.name] = e; },
+                style: { display: item.black.name ? "block" : "none" },
                 class: "piano-key__black",
                 onClick: this.playNote.bind(this, item.black.name),
                 "data-key": item.black.keyCode,
                 "data-note": item.black.name
               },
-              h(
-                "span",
-                {
-                  class: "piano-note",
-                  style: "color:#fff"
-                },
-                item.black.name
-              ),
+              h("span", { class: "piano-note", style: "color:#fff" }, item.black.name),
               h("audio", {
                 preload: "auto",
-                src:
-                  this.data.notes[item.black.name] &&
-                  this.data.notes[item.black.name].url,
+                src: this.data.notes[item.black.name] && this.data.notes[item.black.name].url,
                 hidden: "true",
                 "data-note": item.black.name,
                 class: "audioEle"
@@ -102,83 +78,50 @@ class AppPiano extends WeElement {
       ),
       h(
         "div",
-        {
-          class: "text-center"
-        },
-        h(
-          "p",
-          null,
-          "Click the button below to let the piano play the song automatically:"
-        ),
-        h(
-          "p",
-          null,
-          "\u70B9\u51FB\u4E0B\u9762\u6309\u94AE\u8BA9\u94A2\u7434\u81EA\u52A8\u6F14\u594F\u6B4C\u66F2:",
+        { class: "text-center" },
+        h("p", null, "Click the button below to let the piano play the song automatically:"),
+        h("p", null,
+          "点击下面按钮让钢琴自动演奏歌曲:",
           this.store.data.count > 0 ? "1" : "0"
         ),
         h(
           "div",
           null,
           this.store.data.count > 0
-            ? h(
-                "button",
-                {
-                  onClick: this.stopSong.bind(this),
-                  class: "btn btn-outline-info btn-stop"
-                },
-                "Stop & \u6682\u505C"
-              )
+            ? h("button", { onClick: this.stopSong.bind(this), class: "btn btn-outline-info btn-stop" }, "Stop & 暂停")
             : h(
-                "div",
-                null,
-                h(
-                  "button",
-                  {
-                    onClick: this.playSong.bind(this, moon),
-                    class: "btn btn-outline-info"
-                  },
-                  "\u6708\u4EAE\u4EE3\u8868\u6211\u7684\u5FC3"
-                ),
-                h(
-                  "button",
-                  {
-                    onClick: this.playSong.bind(this, pgydyd),
-                    class: "btn btn-outline-info"
-                  },
-                  "\u84B2\u516C\u82F1\u7684\u7EA6\u5B9A"
-                ),
-                h(
-                  "button",
-                  {
-                    onClick: this.playSong.bind(this, xxy),
-                    class: "btn btn-outline-info"
-                  },
-                  "\u5C0F\u5E78\u8FD0"
-                ),
-                h(
-                  "button",
-                  {
-                    onClick: this.playSong.bind(this, fuji),
-                    class: "btn btn-outline-info"
-                  },
-                  "\u5BCC\u58EB\u5C71\u4E0B&\u7231\u60C5\u8F6C\u79FB"
-                )
-              )
+              "div",
+              null,
+              h("button", { onClick: this.playSong.bind(this, moon), class: "btn btn-outline-info" }, "月亮代表我的心"),
+              h("button", { onClick: this.playSong.bind(this, pgydyd), class: "btn btn-outline-info" }, "蒲公英的约定"),
+              h("button", { onClick: this.playSong.bind(this, xxy), class: "btn btn-outline-info" }, "小幸运"),
+              h("button", { onClick: this.playSong.bind(this, fuji), class: "btn btn-outline-info" }, "富士山下&爱情转移")
+            )
         )
       )
     );
   }
 
   install() {
-    this.data = {
-      notes,
-      pianoKeys
-    };
+    this.data = { notes, pianoKeys };
 
+    // Initialize Web Worker for song scheduling
+    this.workerManager = new PianoWorkerManager();
+    this.workerManager
+      .onNote(note => this.playNote(note))
+      .onFinish(() => this._onSongDone())
+      .onStop(() => this._onSongDone());
+
+    // Load WASM for main-thread note validation
+    loadPianoWasm().then(() => {
+      this.wasmReady = isWasmReady();
+    });
+
+    // Keyboard input handler
     document.onkeydown = event => {
       const e = event || window.event;
 
-      let playNote = key => {
+      const playNote = key => {
         if (e.shiftKey === true) {
           this.playNote(`${key}2`);
         } else if (e.altKey === true) {
@@ -194,405 +137,92 @@ class AppPiano extends WeElement {
       };
 
       if (e && 49 <= e.keyCode && e.keyCode <= 55) {
-        switch (e.keyCode) {
-          case 49:
-            playNote("C");
-            break;
-
-          case 50:
-            playNote("D");
-            break;
-
-          case 51:
-            playNote("E");
-            break;
-
-          case 52:
-            playNote("F");
-            break;
-
-          case 53:
-            playNote("G");
-            break;
-
-          case 54:
-            playNote("A");
-            break;
-
-          case 55:
-            playNote("B");
-            break;
-        }
+        const keyNoteMap = { 49: "C", 50: "D", 51: "E", 52: "F", 53: "G", 54: "A", 55: "B" };
+        const note = keyNoteMap[e.keyCode];
+        if (note) playNote(note);
       }
 
-      if (
-        e &&
-        (81 === e.keyCode ||
-          e.keyCode === 87 ||
-          e.keyCode === 69 ||
-          e.keyCode === 82 ||
-          e.keyCode === 84)
-      ) {
-        switch (e.keyCode) {
-          case 81:
-            playNote("C#");
-            break;
-
-          case 87:
-            playNote("D#");
-            break;
-
-          case 69:
-            playNote("F#");
-            break;
-
-          case 82:
-            playNote("G#");
-            break;
-
-          case 84:
-            playNote("A#");
-            break;
-        }
+      if (e && [81, 87, 69, 82, 84].includes(e.keyCode)) {
+        const sharpNoteMap = { 81: "C#", 87: "D#", 69: "F#", 82: "G#", 84: "A#" };
+        const note = sharpNoteMap[e.keyCode];
+        if (note) playNote(note);
       }
     };
   }
 
-  stopSong() {
-    clearTimeout(this.timer);
-    this.store.data.song = [];
-    this.store.data.count = 0;
+  uninstall() {
+    // Clean up worker when component unmounts
+    if (this.workerManager) {
+      this.workerManager.destroy();
+      this.workerManager = null;
+    }
+    document.onkeydown = null;
   }
 
+  _onSongDone() {
+    this.store.data.song = [];
+    this.store.data.count = 0;
+    this.update();
+  }
+
+  stopSong() {
+    if (this.workerManager) {
+      this.workerManager.stop();
+    }
+    this._onSongDone();
+  }
+
+  /**
+   * Play a single note by name. Uses WASM to validate the note on main thread.
+   */
   playNote(name) {
-    if (!this.data.notes[name]) return;
+    if (!name || !this.data.notes[name]) return;
+
+    // Use WASM to validate note (MIDI number > 0 means valid)
+    if (this.wasmReady) {
+      const midi = parseNote(name);
+      if (midi <= 0) return;
+    }
 
     if (!this.data.notes[name]["isPlay"]) {
-      let audio = this[name].childNodes[1];
-      this[
-        name
-      ].style.background = `linear-gradient(-20deg, #3330fb, #000, #222)`;
-      let timer = setTimeout(() => {
-        this[name].getAttribute("data-type") === "white"
-          ? (this[
-              name
-            ].style.background = `linear-gradient(-30deg, #f8f8f8, #fff)`)
-          : (this[
-              name
-            ].style.background = `linear-gradient(-20deg, #222, #000, #222)`);
-        clearTimeout(timer);
+      const keyEl = this[name];
+      if (!keyEl) return;
+
+      const audio = keyEl.childNodes[1];
+      keyEl.style.background = `linear-gradient(-20deg, #3330fb, #000, #222)`;
+
+      const resetTimer = setTimeout(() => {
+        keyEl.getAttribute("data-type") === "white"
+          ? (keyEl.style.background = `linear-gradient(-30deg, #f8f8f8, #fff)`)
+          : (keyEl.style.background = `linear-gradient(-20deg, #222, #000, #222)`);
+        clearTimeout(resetTimer);
       }, 1000);
+
       audio.currentTime = 0;
       audio.play();
       this.data.notes[name]["isPlay"] = true;
-      let isPlay = setTimeout(() => {
+
+      const isPlayTimer = setTimeout(() => {
         this.data.notes[name]["isPlay"] = false;
-        clearTimeout(isPlay);
+        clearTimeout(isPlayTimer);
       }, 500);
     }
   }
 
+  /**
+   * Start auto-playing a song via the Web Worker.
+   * The worker handles all timing; main thread only plays notes on demand.
+   */
   playSong(song) {
+    if (!this.workerManager) return;
+
     this.setSong([...song]);
-    let offset = 0;
-    let time = 0;
+    this.store.data.count = 1;
+    this.update();
 
-    let playSong = async () => {
-      if (offset < song.length && this.store.data.song.length > 0) {
-        switch (typeof song[offset]) {
-          case "string":
-            let letters = song[offset].match(/[0-9]/g);
-
-            switch (letters.length) {
-              case 1:
-                time = this.handleString(song, offset);
-                break;
-
-              default:
-                time = this.handleStrings(song, offset);
-                break;
-            }
-
-            break;
-
-          case "object":
-            time = song[offset]["time"];
-            this.playNote(song[offset]["note"]);
-            break;
-
-          case "number":
-            switch (song[offset]) {
-              case 0:
-                time = 1000;
-                break;
-            }
-
-            break;
-        }
-
-        await new Promise(resolve => {
-          let timer = setTimeout(() => {
-            clearInterval(timer);
-            resolve();
-          }, time);
-        });
-        offset++;
-        this.update();
-        this.add();
-        playSong();
-      } else {
-        clearTimeout(this.timer);
-        this.store.data.song = [];
-        this.store.data.count = 0;
-        return;
-      }
-    };
-
-    playSong();
+    // Delegate scheduling entirely to the Worker
+    this.workerManager.play(song);
   }
-
-  playSongByInterval(song) {
-    clearInterval(this.interval);
-    let offset = 0;
-    let time = 0;
-    this.interval = setInterval(() => {
-      if (offset < song.length) {
-        switch (typeof song[offset]) {
-          case "string":
-            let letters = song[offset].match(/[0-9]/g);
-
-            switch (letters.length) {
-              case 1:
-                time = this.handleString(song, offset);
-                break;
-
-              default:
-                time = this.handleStrings(song, offset);
-                break;
-            }
-
-            break;
-
-          case "object":
-            time = song[offset]["time"];
-            this.playNote(song[offset]["note"]);
-            break;
-
-          case "number":
-            switch (song[offset]) {
-              case 0:
-                time = 1000;
-                break;
-            }
-
-            break;
-        }
-
-        ++offset;
-      } else {
-        clearInterval(this.interval);
-      }
-    }, 500);
-  }
-
-  handleStrings(song, offset) {
-    let reg = /[0-9]/g;
-    let str = song[offset];
-    let order = 1;
-    let result = [];
-
-    while (true) {
-      let temp = reg.exec(str);
-
-      if (temp) {
-        result.push({
-          text: temp[0],
-          index: temp.index,
-          order: order
-        });
-        order++;
-      } else {
-        break;
-      }
-    }
-
-    result.map(item => {
-      switch (str[item.index - 1]) {
-        case "1":
-        case "2":
-        case "3":
-        case "4":
-        case "5":
-        case "6":
-        case "7":
-          break;
-
-        case "+":
-          item.text = `+${item.text}`;
-
-          switch (str[item.index - 2]) {
-            case "+":
-              item.text = `+${item.text}`;
-              break;
-          }
-
-          break;
-
-        case "-":
-          item.text = `-${item.text}`;
-
-          switch (str[item.index - 2]) {
-            case "-":
-              item.text = `-${item.text}`;
-              break;
-          }
-
-          break;
-
-        case "#":
-          item.text = `#${item.text}`;
-
-          switch (str[item.index - 2]) {
-            case "-":
-              item.text = `-${item.text}`;
-
-              switch (str[item.index - 3]) {
-                case "-":
-                  item.text = `-${item.text}`;
-                  break;
-              }
-
-              break;
-
-            case "+":
-              item.text = `+${item.text}`;
-
-              switch (str[item.index - 3]) {
-                case "+":
-                  item.text = `+${item.text}`;
-                  break;
-              }
-
-              break;
-          }
-
-          break;
-      }
-
-      switch (str[item.index + 1]) {
-        case ".":
-          item.text = `${item.text}.`;
-
-          switch (str[item.index + 2]) {
-            case ".":
-              item.text = `${item.text}.`;
-              break;
-          }
-
-          break;
-      }
-    });
-    let notes = result.map(item => {
-      return item.text;
-    });
-    let time = [];
-    notes.forEach((item, index) => {
-      time.push(this.handleString(notes, index));
-    });
-    return time.sort()[0];
-  }
-
-  handleString(song, offset) {
-    let letter = song[offset].match(/[0-9]/g)[0];
-    let subKey = song[offset].split("-").length - 1;
-    let addKey = song[offset].split("+").length - 1;
-    let pointKey = song[offset].split(".").length - 1;
-    let halfKey = song[offset].split("#").length - 1;
-    let note;
-    let key;
-    let time;
-
-    switch (letter) {
-      case "0":
-        return (time = 1000);
-        break;
-
-      case "1":
-        note = "C";
-        break;
-
-      case "2":
-        note = "D";
-        break;
-
-      case "3":
-        note = "E";
-        break;
-
-      case "4":
-        note = "F";
-        break;
-
-      case "5":
-        note = "G";
-        break;
-
-      case "6":
-        note = "A";
-        break;
-
-      case "7":
-        note = "B";
-        break;
-    }
-
-    switch (subKey) {
-      case 0:
-        key = 4;
-        break;
-
-      case 1:
-        key = 3;
-        break;
-
-      case 2:
-        key = 2;
-        break;
-    }
-
-    switch (addKey) {
-      case 0:
-        key = 4;
-        break;
-
-      case 1:
-        key = 5;
-        break;
-
-      case 2:
-        key = 6;
-        break;
-    }
-
-    switch (pointKey) {
-      case 0:
-        time = 500;
-        break;
-
-      case 1:
-        time = 1000;
-        break;
-
-      case 2:
-        time = 1500;
-        break;
-    }
-
-    this.playNote(`${note + (halfKey > 0 ? "#" : "") + key}`);
-    return time;
-  }
-
-  recordSong() {}
 }
 
 AppPiano.css = `
@@ -686,16 +316,11 @@ AppPiano.css = `
     text-align: center !important;
   }
 
-  /* .btn:not(:disabled):not(.disabled) {
-    cursor: pointer;
-  } */
-
   .btn-outline-info {
     color: #17a2b8;
     background-color: transparent;
     background-image: none;
     border-color: #17a2b8;
-
   }
 
   .btn {
@@ -717,10 +342,12 @@ AppPiano.css = `
     border-color: #ff7171;
   }
 `;
+
 AppPiano.use = [
   {
     count: "count",
     song: "song"
   }
 ];
+
 define("app-piano", AppPiano);
